@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/03 17:15:43 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/06 02:40:35 by zbabic           ###   ########.fr       */
+/*   Created: 2025/11/04 16:17:27 by zbabic            #+#    #+#             */
+/*   Updated: 2025/11/04 16:18:56 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
-#include "error.h"
 
-#define MAP_FILE_PATH_INDEX 1
-
-int main(int argc, char **argv)
+void	player_init(t_player *player)
 {
-	t_env	env;
-
-	if(argc != 2)
-		return perror(ERROR_MSG_WRONG_NUMBER_OF_PARAMETERS), 1;
-	env_init(&env);
-	map_parse_check_file_extension(&env, argv[MAP_FILE_PATH_INDEX]);
-	map_parse(&env, argv[MAP_FILE_PATH_INDEX]);
-	mlx_initialization(&env);
-	env_destroy(&env);
-	return 0;
+	player->coordinates[0] = -1;
+	player->coordinates[1] = -1;
+	player->player_dir = '\0';
 }

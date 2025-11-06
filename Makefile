@@ -6,7 +6,7 @@
 #    By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/03 17:41:31 by zbabic           ###   ########.fr        #
+#    Updated: 2025/11/05 19:42:16 by zbabic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,13 @@ INCLUDES = -I$(INC_FOLDER) -I$(LIBFT_FOLDER) -I$(LIBMLX_FOLDER)/include/MLX42/
 
 LIBMLX_FILE = $(LIBMLX_FOLDER)/build/libmlx42.a
 LIBFT_FILE = $(LIBFT_FOLDER)/libft.a
-SRC_FILES = main.c \
-			mlx_operations.c
+SRC_FILES = env.c \
+			error.c \
+			main.c \
+			map_parsing.c \
+			map.c \
+			mlx_operations.c \
+			player.c \
 
 OBJ_FILES = $(addprefix $(OBJ_FOLDER)/, $(SRC_FILES:.c=.o))
 

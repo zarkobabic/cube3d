@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/03 17:15:43 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/06 02:40:35 by zbabic           ###   ########.fr       */
+/*   Created: 2025/11/04 11:23:58 by zbabic            #+#    #+#             */
+/*   Updated: 2025/11/06 03:31:59 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
-#include "error.h"
 
-#define MAP_FILE_PATH_INDEX 1
-
-int main(int argc, char **argv)
+void	env_destroy(t_env *env)
 {
-	t_env	env;
+	if(env->win)
+		mlx_terminate(env->win);
+	map_destroy(&env->map);
+}
 
-	if(argc != 2)
-		return perror(ERROR_MSG_WRONG_NUMBER_OF_PARAMETERS), 1;
-	env_init(&env);
-	map_parse_check_file_extension(&env, argv[MAP_FILE_PATH_INDEX]);
-	map_parse(&env, argv[MAP_FILE_PATH_INDEX]);
-	mlx_initialization(&env);
-	env_destroy(&env);
-	return 0;
+void	env_init(t_env *env)
+{
+	env->img = NULL;
+	env->win = NULL;
+	env->win_width = WINDOW_WIDTH;
+	env->win_height = WINDOW_HEIGHT;
+	map_init(env);
 }
