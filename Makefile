@@ -6,13 +6,14 @@
 #    By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/05 19:42:16 by zbabic           ###   ########.fr        #
+#    Updated: 2025/11/07 21:08:44 by zbabic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LFLAGS = -ldl -lglfw -pthread -lm -L"/opt/homebrew/opt/glfw/lib/"
+LFLAGS = -ldl -lglfw -pthread -lm -L"/opt/homebrew/opt/glfw/lib/" #macOS
+# LFLAGS = -L ./MLX42 -ldl -lglfw -lm -pthread -lGL #linux
 COMPILER_DEBUG_ENABLED = -g
 C_MAKE_DEBUG = -DDEBUG=1
 REMOVE = rm -rf
@@ -26,7 +27,7 @@ INC_FOLDER = inc
 LIBFT_FOLDER = libft
 LIBMLX_FOLDER = MLX42
 
-INCLUDES = -I$(INC_FOLDER) -I$(LIBFT_FOLDER) -I$(LIBMLX_FOLDER)/include/MLX42/
+INCLUDES = -I$(INC_FOLDER) -I$(LIBFT_FOLDER) -I$(LIBMLX_FOLDER)/include/MLX42
 
 LIBMLX_FILE = $(LIBMLX_FOLDER)/build/libmlx42.a
 LIBFT_FILE = $(LIBFT_FOLDER)/libft.a
@@ -43,7 +44,7 @@ OBJ_FILES = $(addprefix $(OBJ_FOLDER)/, $(SRC_FILES:.c=.o))
 all: $(NAME)
 
 $(NAME): $(LIBMLX_FILE) $(LIBFT_FILE) $(OBJ_FILES)
-	$(CC) $(CFLAGS) $^ $(LFLAGS) -o $@
+	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBMLX_FILE) $(LIBFT_FILE) $(LFLAGS) -o $@
 
 $(LIBMLX_FOLDER):
 	@git clone $(LIBMLX_REPO_URL) $(LIBMLX_FOLDER)

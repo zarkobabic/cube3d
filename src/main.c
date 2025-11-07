@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:15:43 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/06 02:40:35 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/07 21:09:51 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 	env_init(&env);
 	map_parse_check_file_extension(&env, argv[MAP_FILE_PATH_INDEX]);
 	map_parse(&env, argv[MAP_FILE_PATH_INDEX]);
-	mlx_initialization(&env);
+	//mlx_initialization(&env);
 	env_destroy(&env);
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:32:03 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/06 03:37:18 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/07 20:36:38 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,14 @@ bool	map_check_valid_texture_element(char *line, char *texture_type,
 	{
 		if (texture_curr_path)
 		{
-			if (ft_strncmp(texture_type, MAP_NORTH_TEXTURE, 3))
+			free(line);
+			if (ft_strncmp(texture_type, MAP_NORTH_TEXTURE, 3) == 0)
 				error_exit(env, ERROR_MSG_MULTIPLE_DEFINITION_NO_TEXTURE,
 					ERROR_CODE_FILE_SYSTEM_ERROR);
-			else if (ft_strncmp(texture_type, MAP_SOUTH_TEXTURE, 3))
+			else if (ft_strncmp(texture_type, MAP_SOUTH_TEXTURE, 3) == 0)
 				error_exit(env, ERROR_MSG_MULTIPLE_DEFINITION_SO_TEXTURE,
 					ERROR_CODE_FILE_SYSTEM_ERROR);
-			else if (ft_strncmp(texture_type, MAP_EAST_TEXTURE, 3))
+			else if (ft_strncmp(texture_type, MAP_EAST_TEXTURE, 3) == 0)
 				error_exit(env, ERROR_MSG_MULTIPLE_DEFINITION_EA_TEXTURE,
 					ERROR_CODE_FILE_SYSTEM_ERROR);
 			else
@@ -80,11 +81,12 @@ bool	map_check_valid_texture_element(char *line, char *texture_type,
 bool	map_check_valid_color_element(char *line, char *color_type,
 		int current_color, t_env *env)
 {
-	if (ft_strncmp(line, MAP_FLOOR_COLOR, 2) == 0)
+	if (ft_strncmp(line, color_type, 2) == 0)
 	{
 		if (current_color != -1)
 		{
-			if (ft_strncmp(color_type, MAP_FLOOR_COLOR, 2))
+			free(line);
+			if (ft_strncmp(color_type, MAP_FLOOR_COLOR, 2) == 0)
 				error_exit(env, ERROR_MSG_MULTIPLE_DEFINITION_FLOOR_COLOR,
 					ERROR_CODE_FILE_SYSTEM_ERROR);
 			else
@@ -112,37 +114,31 @@ void	free_split(char ***split)
 	*split = NULL;
 }
 
-void	parse_rgb(char *str, int *color_loc_to_fill, t_env *env)
+void	parse_rgb(char *line, int *color_loc_to_fill, t_env *env)
 {
 	int		i;
 	char	**split;
 	int		rgb[3];
 
-	split = ft_split(str, ',');
+	split = ft_split(line, ',');
 	if (!split)
-		error_exit(env, ERROR_MSG_COLOR_PARSING_FAILED,
-			ERROR_CODE_FILE_SYSTEM_ERROR);
+		return (free(line - 2), error_exit(env, ERROR_MSG_COLOR_PARSING_FAILED,
+				ERROR_CODE_FILE_SYSTEM_ERROR));
 	i = 0;
 	while (split[i])
 		++i;
 	if (i != 3)
-	{
-		free_split(&split);
-		error_exit(env, ERROR_MSG_WRONG_COLOR_FORMAT,
-			ERROR_CODE_FILE_SYSTEM_ERROR);
-	}
+		return (free(line - 2), free_split(&split), error_exit(env,
+				ERROR_MSG_WRONG_COLOR_FORMAT, ERROR_CODE_FILE_SYSTEM_ERROR));
 	rgb[COLOR_R] = ft_atoi(split[COLOR_R]);
 	rgb[COLOR_G] = ft_atoi(split[COLOR_G]);
 	rgb[COLOR_B] = ft_atoi(split[COLOR_B]);
 	if (rgb[COLOR_R] < 0 || rgb[COLOR_R] > 255 || rgb[COLOR_G] < 0
 		|| rgb[COLOR_G] > 255 || rgb[COLOR_B] < 0 || rgb[COLOR_B] > 255)
-	{
-		free_split(&split);
-		error_exit(env, ERROR_MSG_WRONG_COLOR_COMPONENT_RANGE,
+		free(line - 2), free_split(&split), error_exit(env,
+			ERROR_MSG_WRONG_COLOR_COMPONENT_RANGE,
 			ERROR_CODE_FILE_SYSTEM_ERROR);
-	}
-	*color_loc_to_fill = (rgb[COLOR_R] << 16 | rgb[COLOR_G] << 8
-			| rgb[COLOR_B]);
+	*color_loc_to_fill = (rgb[COLOR_R] << 16 | rgb[COLOR_G] << 8 | rgb[COLOR_B]);
 	free_split(&split);
 }
 
@@ -155,12 +151,18 @@ void	parse_texture(char *line, char **texture, t_env *env)
 	while (line[i] && (is_whitespace(line[i])))
 		i++;
 	if (!line[i])
+	{
+		free(line - 3);
 		error_exit(env, ERROR_MSG_MISSING_TEXTURE_FILE,
 			ERROR_CODE_FILE_SYSTEM_ERROR);
+	}
 	path = ft_strdup(&line[i]);
 	if (!path)
+	{
+		free(line - 3);
 		error_exit(env, ERROR_MSG_MAP_ALLOCATION_FAILED,
 			ERROR_CODE_FILE_SYSTEM_ERROR);
+	}
 	i = ft_strlen(path) - 1;
 	while (i >= 0 && (is_whitespace(path[i])))
 		path[i--] = '\0';
@@ -189,29 +191,30 @@ void	map_parse_one_element(char *line, t_env *env)
 	else if (map_check_valid_color_element(line, MAP_CEILING_COLOR,
 			env->map.ceiling_color, env))
 		return (parse_rgb(line + 2, &env->map.ceiling_color, env));
+	free(line);
 	error_exit(env, ERROR_MSG_UNEXPECTED_FILE_LINE,
 		ERROR_CODE_FILE_SYSTEM_ERROR);
 }
 
-void	map_check_all_elements_parsed(t_env *env)
+void	map_check_all_elements_parsed(char *line, t_env *env)
 {
 	if (!env->map.no_texture)
-		return (error_exit(env, ERROR_MSG_MISSING_NO_TEXTURE,
+		return (free(line), error_exit(env, ERROR_MSG_MISSING_NO_TEXTURE,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
 	if (!env->map.so_texture)
-		return (error_exit(env, ERROR_MSG_MISSING_SO_TEXTURE,
+		return (free(line), error_exit(env, ERROR_MSG_MISSING_SO_TEXTURE,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
 	if (!env->map.we_texture)
-		return (error_exit(env, ERROR_MSG_MISSING_WE_TEXTURE,
+		return (free(line), error_exit(env, ERROR_MSG_MISSING_WE_TEXTURE,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
 	if (!env->map.ea_texture)
-		return (error_exit(env, ERROR_MSG_MISSING_EA_TEXTURE,
+		return (free(line), error_exit(env, ERROR_MSG_MISSING_EA_TEXTURE,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
 	if (env->map.ceiling_color == -1)
-		return (error_exit(env, ERROR_MSG_MISSING_CEILING_COLOR,
+		return (free(line), error_exit(env, ERROR_MSG_MISSING_CEILING_COLOR,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
 	if (env->map.floor_color == -1)
-		return (error_exit(env, ERROR_MSG_MISSING_FLOOR_COLOR,
+		return (free(line), error_exit(env, ERROR_MSG_MISSING_FLOOR_COLOR,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
 }
 
@@ -237,8 +240,9 @@ void	map_parse(t_env *env, char *map_file_path)
 		}
 		if (line[0] == MAP_SPACE || line[0] == MAP_WALL)
 		{
-			map_check_all_elements_parsed(env);
+			map_check_all_elements_parsed(line, env);
 			map_started = 1;
+			free(line); //obrisi samo privremeno za testiranje
 			// TODO: map_parse_matrix(env,fd); dont close fd in this function its already closed afterwards in current function
 			break ;
 		}

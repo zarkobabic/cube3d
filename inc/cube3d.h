@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/06 02:53:23 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/07 21:07:52 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define MAP_PLAYER_SOUTH 'S'
 # define MAP_NORTH_TEXTURE "NO "
 # define MAP_SOUTH_TEXTURE "SO "
-# define MAP_EAST_TEXTURE "WE "
-# define MAP_WEST_TEXTURE "EA "
+# define MAP_EAST_TEXTURE "EA "
+# define MAP_WEST_TEXTURE "WE "
 # define MAP_FLOOR_COLOR "F "
 # define MAP_CEILING_COLOR "C "
 
