@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:23:58 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/06 03:31:59 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/07 21:25:24 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	env_destroy(t_env *env)
 {
-	if(env->win)
+	if (env->win)
 		mlx_terminate(env->win);
 	map_destroy(&env->map);
 }

@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:32:03 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/07 20:36:38 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/08 13:19:05 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,11 @@ void	parse_rgb(char *line, int *color_loc_to_fill, t_env *env)
 	rgb[COLOR_B] = ft_atoi(split[COLOR_B]);
 	if (rgb[COLOR_R] < 0 || rgb[COLOR_R] > 255 || rgb[COLOR_G] < 0
 		|| rgb[COLOR_G] > 255 || rgb[COLOR_B] < 0 || rgb[COLOR_B] > 255)
-		free(line - 2), free_split(&split), error_exit(env,
-			ERROR_MSG_WRONG_COLOR_COMPONENT_RANGE,
-			ERROR_CODE_FILE_SYSTEM_ERROR);
-	*color_loc_to_fill = (rgb[COLOR_R] << 16 | rgb[COLOR_G] << 8 | rgb[COLOR_B]);
+		return (free(line - 2), free_split(&split), error_exit(env,
+				ERROR_MSG_WRONG_COLOR_COMPONENT_RANGE,
+				ERROR_CODE_FILE_SYSTEM_ERROR));
+	*color_loc_to_fill = (rgb[COLOR_R] << 16 | rgb[COLOR_G] << 8
+			| rgb[COLOR_B]);
 	free_split(&split);
 }
 
@@ -218,21 +219,15 @@ void	map_check_all_elements_parsed(char *line, t_env *env)
 				ERROR_CODE_FILE_SYSTEM_ERROR));
 }
 
-void	map_parse(t_env *env, char *map_file_path)
+static void	map_process_file(bool *map_started, t_env *env)
 {
 	char	*line;
-	bool	map_started;
 
-	env->map.map_file_fd = open(map_file_path, O_RDONLY);
-	if (env->map.map_file_fd < 0)
-		return (error_exit(env, ERROR_MSG_UNABLE_TO_OPEN_FILE,
-				ERROR_CODE_FILE_SYSTEM_ERROR));
-	map_started = false;
 	while (true)
 	{
 		line = get_next_line(env->map.map_file_fd);
 		if (!line)
-			break ;
+			return ;
 		if (is_empty_line(line))
 		{
 			free(line);
@@ -241,14 +236,27 @@ void	map_parse(t_env *env, char *map_file_path)
 		if (line[0] == MAP_SPACE || line[0] == MAP_WALL)
 		{
 			map_check_all_elements_parsed(line, env);
-			map_started = 1;
-			free(line); //obrisi samo privremeno za testiranje
-			// TODO: map_parse_matrix(env,fd); dont close fd in this function its already closed afterwards in current function
-			break ;
+			*map_started = 1;
+			free(line); // obrisi samo privremeno za testiranje
+			// TODO: map_parse_matrix(env,fd); dont close fd in
+			// this function its already closed afterwards in current function
+			return ;
 		}
 		map_parse_one_element(line, env);
 		free(line);
 	}
+}
+
+void	map_parse(t_env *env, char *map_file_path)
+{
+	bool	map_started;
+
+	env->map.map_file_fd = open(map_file_path, O_RDONLY);
+	if (env->map.map_file_fd < 0)
+		return (error_exit(env, ERROR_MSG_UNABLE_TO_OPEN_FILE,
+				ERROR_CODE_FILE_SYSTEM_ERROR));
+	map_started = false;
+	map_process_file(&map_started, env);
 	close(env->map.map_file_fd);
 	env->map.map_file_fd = -1;
 	if (!map_started)

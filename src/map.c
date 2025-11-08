@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/06 03:38:08 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/07 21:34:55 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,20 @@
 // 			return (matrix_destroy(&matrix, i), NULL);
 // 		++i;
 // 	}
-// 	return matrix;
+// 	return (matrix);
 // }
 
 void	map_destroy(t_map *map)
 {
-	if(map->map_file_fd != -1)
+	if (map->map_file_fd != -1)
 		close(map->map_file_fd);
-	if(map->no_texture)
+	if (map->no_texture)
 		free(map->no_texture);
-	if(map->so_texture)
+	if (map->so_texture)
 		free(map->so_texture);
-	if(map->we_texture)
+	if (map->we_texture)
 		free(map->we_texture);
-	if(map->ea_texture)
+	if (map->ea_texture)
 		free(map->ea_texture);
 	// if(map->matrix)
 	// 	matrix_destroy(&map->matrix, map->rows);

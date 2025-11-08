@@ -6,14 +6,14 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:47:04 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/07 20:43:02 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/07 21:24:04 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_MESSAGES_H
-# define ERROR_MESSAGES_H
+#ifndef ERROR_H
+# define ERROR_H
 
-#include "cube3d.h"
+# include "cube3d.h"
 
 # define ERROR_MSG_WRONG_NUMBER_OF_PARAMETERS  \
 "Error\n Invalid number of parameters. Expected exactly 2 parameters."
