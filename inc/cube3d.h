@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/07 21:24:36 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/09 00:16:30 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include "map_linked_list.h"
 
 # define WINDOW_WIDTH 1000
 # define WINDOW_HEIGHT 500
@@ -79,9 +80,12 @@ void			env_destroy(t_env *env);
 // MAP
 void			map_destroy(t_map *map);
 void			map_init(t_env *env);
+// TODO: JUST FOR TESTING DELETE AFTER
+void			test_map_print(t_env *env);
 // MAP_PARSING
 void			map_parse(t_env *env, char *map_file_path);
 void			map_parse_check_file_extension(t_env *env, char *map_file_path);
+void			map_parse_matrix(t_env *env, char *first_line);
 // PLAYER
 void			player_init(t_player *player);
 #endif

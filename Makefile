@@ -6,14 +6,14 @@
 #    By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/08 13:20:54 by zbabic           ###   ########.fr        #
+#    Updated: 2025/11/09 00:04:17 by zbabic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-#LFLAGS = -ldl -lglfw -pthread -lm -L"/opt/homebrew/opt/glfw/lib/" #macOS
-LFLAGS = -L ./MLX42 -ldl -lglfw -lm -pthread -lGL #linux
+LFLAGS = -ldl -lglfw -pthread -lm -L"/opt/homebrew/opt/glfw/lib/" #macOS
+# LFLAGS = -L ./MLX42 -ldl -lglfw -lm -pthread -lGL #linux
 COMPILER_DEBUG_ENABLED = -g
 C_MAKE_DEBUG = -DDEBUG=1
 REMOVE = rm -rf
@@ -34,6 +34,8 @@ LIBFT_FILE = $(LIBFT_FOLDER)/libft.a
 SRC_FILES = env.c \
 			error.c \
 			main.c \
+			map_parse_linked_list.c \
+			map_parse_matrix.c \
 			map_parsing.c \
 			map.c \
 			mlx_operations.c \

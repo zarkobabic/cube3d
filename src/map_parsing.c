@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:32:03 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/08 13:19:05 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/09 00:03:30 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,9 +237,7 @@ static void	map_process_file(bool *map_started, t_env *env)
 		{
 			map_check_all_elements_parsed(line, env);
 			*map_started = 1;
-			free(line); // obrisi samo privremeno za testiranje
-			// TODO: map_parse_matrix(env,fd); dont close fd in
-			// this function its already closed afterwards in current function
+			map_parse_matrix(env, line);
 			return ;
 		}
 		map_parse_one_element(line, env);

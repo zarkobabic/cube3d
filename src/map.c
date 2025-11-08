@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/07 21:34:55 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/09 00:19:33 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,22 @@
 #include "error.h"
 #include <unistd.h>
 
-// static void	matrix_destroy(char ***matrix, int rows)
-// {
-// 	int i;
+static void	matrix_destroy(char ***matrix, int rows)
+{
+	int	i;
 
-// 	if(!matrix || !*matrix)
-// 		return ;
-// 	i = 0;
-// 	while(i < rows)
-// 	{
-// 		if((*matrix)[i])
-// 			free((*matrix)[i]);
-// 		++i;
-// 	}
-// 	free(*matrix);
-// 	*matrix = NULL;
-// }
-
-// static char	**create_matrix(int rows, int cols)
-// {
-// 	char	**matrix;
-// 	int		i;
-
-// 	i = 0;
-// 	matrix = (char **)malloc(rows * sizeof(char *));
-// 	if (!matrix)
-// 		return (NULL);
-// 	while (i < rows)
-// 	{
-// 		matrix[i] = (char *)malloc(cols * sizeof(char));
-// 		if (!matrix[i])
-// 			return (matrix_destroy(&matrix, i), NULL);
-// 		++i;
-// 	}
-// 	return (matrix);
-// }
+	if (!matrix || !*matrix)
+		return ;
+	i = 0;
+	while (i < rows)
+	{
+		if ((*matrix)[i])
+			free((*matrix)[i]);
+		++i;
+	}
+	free(*matrix);
+	*matrix = NULL;
+}
 
 void	map_destroy(t_map *map)
 {
@@ -62,8 +43,8 @@ void	map_destroy(t_map *map)
 		free(map->we_texture);
 	if (map->ea_texture)
 		free(map->ea_texture);
-	// if(map->matrix)
-	// 	matrix_destroy(&map->matrix, map->rows);
+	if (map->matrix)
+		matrix_destroy(&map->matrix, map->rows);
 }
 
 void	map_init(t_env *env)
@@ -82,4 +63,32 @@ void	map_init(t_env *env)
 	map->ceiling_color = -1;
 	map->map_file_fd = -1;
 	player_init(&map->player);
+}
+
+void	test_map_print(t_env *env)
+{
+	int	i;
+	int	j;
+
+	printf("MAP INFO \n");
+	printf("map_file_fd: %d|\n", env->map.map_file_fd);
+	printf("rows: %d|\n", env->map.rows);
+	printf("cols: %d|\n", env->map.cols);
+	printf("tile_size: %d|\n", env->map.tile_size);
+	printf("no_texture: %s|\n", env->map.no_texture);
+	printf("so_texture: %s|\n", env->map.so_texture);
+	printf("we_texture: %s|\n", env->map.we_texture);
+	printf("ea_texture: %s|\n", env->map.ea_texture);
+	printf("floor_color: %d|\n", env->map.floor_color);
+	printf("ceiling_color: %d|\n", env->map.ceiling_color);
+	i = 0;
+	while (i < env->map.rows)
+	{
+		j = 0;
+		printf("|");
+		while (j < env->map.cols)
+			printf("%c", env->map.matrix[i][j++]);
+		printf("|\n");
+		++i;
+	}
 }

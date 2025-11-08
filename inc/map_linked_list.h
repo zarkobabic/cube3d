@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   map_linked_list.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/03 17:15:43 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/09 00:16:42 by zbabic           ###   ########.fr       */
+/*   Created: 2025/11/08 22:48:51 by zbabic            #+#    #+#             */
+/*   Updated: 2025/11/08 22:52:17 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
-#include "error.h"
+#ifndef MAP_LINKED_LIST_H
+# define MAP_LINKED_LIST_H
 
-#define MAP_FILE_PATH_INDEX 1
-
-int	main(int argc, char **argv)
+typedef struct s_map_line
 {
-	t_env	env;
+	char				*line;
+	struct s_map_line	*next;
+}						t_map_line;
 
-	if (argc != 2)
-		return (perror(ERROR_MSG_WRONG_NUMBER_OF_PARAMETERS), 1);
-	env_init(&env);
-	map_parse_check_file_extension(&env, argv[MAP_FILE_PATH_INDEX]);
-	map_parse(&env, argv[MAP_FILE_PATH_INDEX]);
-	test_map_print(&env);
-	// mlx_initialization(&env);
-	env_destroy(&env);
-	return (0);
-}
+t_map_line				*create_map_node(char *line);
+void					add_map_line(t_map_line **head, t_map_line **tail,
+							t_map_line *new_node);
+void					free_map_list(t_map_line **head);
+
+#endif

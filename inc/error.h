@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:47:04 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/07 21:24:04 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/08 23:01:55 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,18 @@
 "Error\n Color format is wrong. Color must have defined R G and B values"
 # define ERROR_MSG_WRONG_COLOR_COMPONENT_RANGE \
 "Error\n Wrong color component range. RGB values must be between 0 and 255"
+# define ERROR_MSG_MATRIX_READ_FAIL \
+"Error\n Failed to read map matrix data."
+# define ERROR_MSG_MATRIX_ALLOCATION_FAIL \
+"Error\n Failed to allocate space for map matrix data."
 
 typedef enum e_error_code
 {
 	ERROR_CODE_NO_ERROR,
 	ERROR_CODE_GENERAL_ERROR,
 	ERROR_CODE_FILE_SYSTEM_ERROR,
-	ERROR_CODE_MLX_ERROR
+	ERROR_CODE_MLX_ERROR,
+	ERROR_MAP_READ_ERROR
 }		t_error_code;
 
 void	error_exit(t_env *env, const char *message, t_error_code error_code);
