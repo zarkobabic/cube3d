@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/09 00:19:33 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/09 15:48:29 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	test_map_print(t_env *env)
 	printf("map_file_fd: %d|\n", env->map.map_file_fd);
 	printf("rows: %d|\n", env->map.rows);
 	printf("cols: %d|\n", env->map.cols);
-	printf("tile_size: %d|\n", env->map.tile_size);
+	//printf("tile_size: %d|\n", env->map.tile_size);
 	printf("no_texture: %s|\n", env->map.no_texture);
 	printf("so_texture: %s|\n", env->map.so_texture);
 	printf("we_texture: %s|\n", env->map.we_texture);

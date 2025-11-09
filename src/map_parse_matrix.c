@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:25:19 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/09 00:18:59 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/09 22:49:56 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,72 @@ static bool	map_list_to_matrix(t_map_line *head, t_env *env)
 	return (true);
 }
 
+static int	is_player_char(char c)
+{
+	return (c == MAP_PLAYER_NORTH || c == MAP_PLAYER_SOUTH
+		|| c == MAP_PLAYER_EAST || c == MAP_PLAYER_WEST);
+}
+
+static int	check_character_on_valid_position(t_map *map, int i, int j)
+{
+	if (map->matrix[i][j] != MAP_EMPTY && !is_player_char(map->matrix[i][j]))
+		return (true);
+	if (i == 0 || i == map->rows - 1)
+		return (false);
+	if (j == 0 || j == map->cols - 1)
+		return (false);
+	if (map->matrix[i - 1][j] == MAP_SPACE || map->matrix[i
+		+ 1][j] == MAP_SPACE)
+		return (false);
+	if (map->matrix[i][j - 1] == MAP_SPACE || map->matrix[i][j
+		+ 1] == MAP_SPACE)
+		return (false);
+	return (true);
+}
+
+static bool	validate_map_rules(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < map->rows)
+	{
+		j = -1;
+		while (++j < map->cols)
+			if (!check_character_on_valid_position(map, i, j))
+				return (false);
+	}
+	return (true);
+}
+
+static bool	find_player_position(t_map *map)
+{
+	int	i;
+	int	j;
+	int	player_count;
+
+	player_count = 0;
+	i = -1;
+	while (++i < map->rows)
+	{
+		j = -1;
+		while (++j < map->cols)
+		{
+			if (is_player_char(map->matrix[i][j]))
+			{
+				map->player.coordinates[0] = i;
+				map->player.coordinates[1] = j;
+				map->player.player_dir = map->matrix[i][j];
+				player_count++;
+			}
+		}
+	}
+	if (player_count != 1)
+		return (false);
+	return (true);
+}
+
 void	map_parse_matrix(t_env *env, char *first_line)
 {
 	t_map_line	*head;
@@ -143,5 +209,8 @@ void	map_parse_matrix(t_env *env, char *first_line)
 		return (free_map_list(&head), error_exit(env,
 				ERROR_MSG_MATRIX_ALLOCATION_FAIL, ERROR_MAP_READ_ERROR));
 	free_map_list(&head);
-	// TODO: check walls and player
+	if (!find_player_position(&env->map))
+		error_exit(env, ERROR_MSG_INVALID_PLAYER_COUNT, ERROR_MAP_READ_ERROR);
+	if (!validate_map_rules(&env->map))
+		error_exit(env, ERROR_MSG_MAP_RULES_VIOLATION, ERROR_MAP_READ_ERROR);
 }

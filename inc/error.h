@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:47:04 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/08 23:01:55 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/09 22:50:30 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,11 @@
 "Error\n Failed to read map matrix data."
 # define ERROR_MSG_MATRIX_ALLOCATION_FAIL \
 "Error\n Failed to allocate space for map matrix data."
+# define ERROR_MSG_INVALID_PLAYER_COUNT \
+"Error\n Invalid map configuration: exactly one player must be defined."
+# define ERROR_MSG_MAP_RULES_VIOLATION \
+"Error\n Invalid map configuration: the map must be fully enclosed by walls, \
+and the player must be located within the enclosed area."
 
 typedef enum e_error_code
 {
