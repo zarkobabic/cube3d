@@ -5,259 +5,119 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/04 11:32:03 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/09 00:03:30 by zbabic           ###   ########.fr       */
+/*   Created: 2025/11/08 15:25:19 by zbabic            #+#    #+#             */
+/*   Updated: 2025/11/10 21:44:45 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 #include "error.h"
-#include <fcntl.h>
-#include <unistd.h>
+#include "map_linked_list.h"
 
-void	map_parse_check_file_extension(t_env *env, char *map_file_path)
-{
-	int		has_no_extension;
-	size_t	len;
-
-	len = ft_strlen(map_file_path);
-	if (len < 4)
-		error_exit(env, ERROR_MSG_WRONG_FILE_EXTENSION,
-			ERROR_CODE_FILE_SYSTEM_ERROR);
-	has_no_extension = ft_strncmp(&map_file_path[len - 4], ".pub", 5);
-	if (has_no_extension)
-		error_exit(env, ERROR_MSG_WRONG_FILE_EXTENSION,
-			ERROR_CODE_FILE_SYSTEM_ERROR);
-}
-
-bool	is_whitespace(char c)
-{
-	if (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
-		|| c == '\r')
-		return (true);
-	return (false);
-}
-
-bool	is_empty_line(char *line)
+static bool	map_validate_line(char *line)
 {
 	int	i;
 
 	i = 0;
-	while (line[i])
+	while (line[i] && line[i] != '\n')
 	{
-		if (!is_whitespace(line[i]))
+		if (!map_validate_char(line[i]))
 			return (false);
 		i++;
 	}
 	return (true);
 }
 
-bool	map_check_valid_texture_element(char *line, char *texture_type,
-		char *texture_curr_path, t_env *env)
+static bool	map_read_lines(t_map_line **head, char *first_line, t_env *env)
 {
-	if (ft_strncmp(line, texture_type, 3) == 0)
-	{
-		if (texture_curr_path)
-		{
-			free(line);
-			if (ft_strncmp(texture_type, MAP_NORTH_TEXTURE, 3) == 0)
-				error_exit(env, ERROR_MSG_MULTIPLE_DEFINITION_NO_TEXTURE,
-					ERROR_CODE_FILE_SYSTEM_ERROR);
-			else if (ft_strncmp(texture_type, MAP_SOUTH_TEXTURE, 3) == 0)
-				error_exit(env, ERROR_MSG_MULTIPLE_DEFINITION_SO_TEXTURE,
-					ERROR_CODE_FILE_SYSTEM_ERROR);
-			else if (ft_strncmp(texture_type, MAP_EAST_TEXTURE, 3) == 0)
-				error_exit(env, ERROR_MSG_MULTIPLE_DEFINITION_EA_TEXTURE,
-					ERROR_CODE_FILE_SYSTEM_ERROR);
-			else
-				error_exit(env, ERROR_MSG_MULTIPLE_DEFINITION_WE_TEXTURE,
-					ERROR_CODE_FILE_SYSTEM_ERROR);
-		}
-		return (true);
-	}
-	return (false);
-}
+	char		*line;
+	t_map_line	*new_node;
+	t_map_line	*tail;
 
-bool	map_check_valid_color_element(char *line, char *color_type,
-		int current_color, t_env *env)
-{
-	if (ft_strncmp(line, color_type, 2) == 0)
-	{
-		if (current_color != -1)
-		{
-			free(line);
-			if (ft_strncmp(color_type, MAP_FLOOR_COLOR, 2) == 0)
-				error_exit(env, ERROR_MSG_MULTIPLE_DEFINITION_FLOOR_COLOR,
-					ERROR_CODE_FILE_SYSTEM_ERROR);
-			else
-				error_exit(env, ERROR_MSG_MULTIPLE_DEFINITION_CEILING_COLOR,
-					ERROR_CODE_FILE_SYSTEM_ERROR);
-		}
-		return (true);
-	}
-	return (false);
-}
-
-void	free_split(char ***split)
-{
-	int	i;
-
-	if (!split || !(*split))
-		return ;
-	i = 0;
-	while ((*split)[i])
-	{
-		free((*split)[i]);
-		++i;
-	}
-	free(*split);
-	*split = NULL;
-}
-
-void	parse_rgb(char *line, int *color_loc_to_fill, t_env *env)
-{
-	int		i;
-	char	**split;
-	int		rgb[3];
-
-	split = ft_split(line, ',');
-	if (!split)
-		return (free(line - 2), error_exit(env, ERROR_MSG_COLOR_PARSING_FAILED,
-				ERROR_CODE_FILE_SYSTEM_ERROR));
-	i = 0;
-	while (split[i])
-		++i;
-	if (i != 3)
-		return (free(line - 2), free_split(&split), error_exit(env,
-				ERROR_MSG_WRONG_COLOR_FORMAT, ERROR_CODE_FILE_SYSTEM_ERROR));
-	rgb[COLOR_R] = ft_atoi(split[COLOR_R]);
-	rgb[COLOR_G] = ft_atoi(split[COLOR_G]);
-	rgb[COLOR_B] = ft_atoi(split[COLOR_B]);
-	if (rgb[COLOR_R] < 0 || rgb[COLOR_R] > 255 || rgb[COLOR_G] < 0
-		|| rgb[COLOR_G] > 255 || rgb[COLOR_B] < 0 || rgb[COLOR_B] > 255)
-		return (free(line - 2), free_split(&split), error_exit(env,
-				ERROR_MSG_WRONG_COLOR_COMPONENT_RANGE,
-				ERROR_CODE_FILE_SYSTEM_ERROR));
-	*color_loc_to_fill = (rgb[COLOR_R] << 16 | rgb[COLOR_G] << 8
-			| rgb[COLOR_B]);
-	free_split(&split);
-}
-
-void	parse_texture(char *line, char **texture, t_env *env)
-{
-	int		i;
-	char	*path;
-
-	i = 0;
-	while (line[i] && (is_whitespace(line[i])))
-		i++;
-	if (!line[i])
-	{
-		free(line - 3);
-		error_exit(env, ERROR_MSG_MISSING_TEXTURE_FILE,
-			ERROR_CODE_FILE_SYSTEM_ERROR);
-	}
-	path = ft_strdup(&line[i]);
-	if (!path)
-	{
-		free(line - 3);
-		error_exit(env, ERROR_MSG_MAP_ALLOCATION_FAILED,
-			ERROR_CODE_FILE_SYSTEM_ERROR);
-	}
-	i = ft_strlen(path) - 1;
-	while (i >= 0 && (is_whitespace(path[i])))
-		path[i--] = '\0';
-	*texture = path;
-}
-
-void	map_parse_one_element(char *line, t_env *env)
-{
-	while (is_whitespace(*line))
-		line++;
-	if (map_check_valid_texture_element(line, MAP_NORTH_TEXTURE,
-			env->map.no_texture, env))
-		return (parse_texture(line + 3, &env->map.no_texture, env));
-	else if (map_check_valid_texture_element(line, MAP_SOUTH_TEXTURE,
-			env->map.so_texture, env))
-		return (parse_texture(line + 3, &env->map.so_texture, env));
-	else if (map_check_valid_texture_element(line, MAP_EAST_TEXTURE,
-			env->map.ea_texture, env))
-		return (parse_texture(line + 3, &env->map.ea_texture, env));
-	else if (map_check_valid_texture_element(line, MAP_WEST_TEXTURE,
-			env->map.we_texture, env))
-		return (parse_texture(line + 3, &env->map.we_texture, env));
-	else if (map_check_valid_color_element(line, MAP_FLOOR_COLOR,
-			env->map.floor_color, env))
-		return (parse_rgb(line + 2, &env->map.floor_color, env));
-	else if (map_check_valid_color_element(line, MAP_CEILING_COLOR,
-			env->map.ceiling_color, env))
-		return (parse_rgb(line + 2, &env->map.ceiling_color, env));
-	free(line);
-	error_exit(env, ERROR_MSG_UNEXPECTED_FILE_LINE,
-		ERROR_CODE_FILE_SYSTEM_ERROR);
-}
-
-void	map_check_all_elements_parsed(char *line, t_env *env)
-{
-	if (!env->map.no_texture)
-		return (free(line), error_exit(env, ERROR_MSG_MISSING_NO_TEXTURE,
-				ERROR_CODE_FILE_SYSTEM_ERROR));
-	if (!env->map.so_texture)
-		return (free(line), error_exit(env, ERROR_MSG_MISSING_SO_TEXTURE,
-				ERROR_CODE_FILE_SYSTEM_ERROR));
-	if (!env->map.we_texture)
-		return (free(line), error_exit(env, ERROR_MSG_MISSING_WE_TEXTURE,
-				ERROR_CODE_FILE_SYSTEM_ERROR));
-	if (!env->map.ea_texture)
-		return (free(line), error_exit(env, ERROR_MSG_MISSING_EA_TEXTURE,
-				ERROR_CODE_FILE_SYSTEM_ERROR));
-	if (env->map.ceiling_color == -1)
-		return (free(line), error_exit(env, ERROR_MSG_MISSING_CEILING_COLOR,
-				ERROR_CODE_FILE_SYSTEM_ERROR));
-	if (env->map.floor_color == -1)
-		return (free(line), error_exit(env, ERROR_MSG_MISSING_FLOOR_COLOR,
-				ERROR_CODE_FILE_SYSTEM_ERROR));
-}
-
-static void	map_process_file(bool *map_started, t_env *env)
-{
-	char	*line;
-
+	tail = NULL;
+	env->map.rows = 0;
+	line = first_line;
 	while (true)
 	{
-		line = get_next_line(env->map.map_file_fd);
 		if (!line)
-			return ;
-		if (is_empty_line(line))
-		{
-			free(line);
-			continue ;
-		}
-		if (line[0] == MAP_SPACE || line[0] == MAP_WALL)
-		{
-			map_check_all_elements_parsed(line, env);
-			*map_started = 1;
-			map_parse_matrix(env, line);
-			return ;
-		}
-		map_parse_one_element(line, env);
-		free(line);
+			break ;
+		if (!map_validate_line(line))
+			return (free(line), false);
+		new_node = map_list_create_node(line);
+		if (!new_node)
+			return (free(line), false);
+		map_list_add(head, &tail, new_node);
+		++(env->map.rows);
+		line = get_next_line(env->map.map_file_fd);
 	}
+	return (true);
 }
 
-void	map_parse(t_env *env, char *map_file_path)
+static int	map_get_max_line_length(t_map_line *head)
 {
-	bool	map_started;
+	int		max_len;
+	int		len;
+	char	*line;
 
-	env->map.map_file_fd = open(map_file_path, O_RDONLY);
-	if (env->map.map_file_fd < 0)
-		return (error_exit(env, ERROR_MSG_UNABLE_TO_OPEN_FILE,
-				ERROR_CODE_FILE_SYSTEM_ERROR));
-	map_started = false;
-	map_process_file(&map_started, env);
-	close(env->map.map_file_fd);
-	env->map.map_file_fd = -1;
-	if (!map_started)
-		error_exit(env, ERROR_MSG_NO_MAP_FOUND_IN_FILE,
-			ERROR_CODE_FILE_SYSTEM_ERROR);
+	max_len = 0;
+	while (head)
+	{
+		line = head->line;
+		len = 0;
+		while (line[len] && line[len] != '\n')
+			len++;
+		if (len > max_len)
+			max_len = len;
+		head = head->next;
+	}
+	return (max_len);
+}
+
+char	*map_pad_line_with_spaces(char *line, int target_width)
+{
+	char	*padded;
+	int		i;
+	int		len;
+
+	len = 0;
+	while (line[len] && line[len] != '\n')
+		++len;
+	padded = malloc(target_width + 1);
+	if (!padded)
+		return (NULL);
+	i = 0;
+	while (i < len)
+	{
+		padded[i] = line[i];
+		++i;
+	}
+	while (i < target_width)
+	{
+		padded[i] = ' ';
+		++i;
+	}
+	padded[i] = '\0';
+	return (padded);
+}
+
+void	map_parsing(t_env *env, char *first_line)
+{
+	t_map_line	*head;
+
+	head = NULL;
+	if (!map_read_lines(&head, first_line, env))
+		return (map_list_free(&head), error_exit(env,
+				ERROR_MSG_MATRIX_READ_FAIL, ERROR_MAP_READ_ERROR));
+	if (!head)
+		return (error_exit(env, ERROR_MSG_MATRIX_READ_FAIL,
+				ERROR_MAP_READ_ERROR));
+	env->map.cols = map_get_max_line_length(head);
+	if (!map_list_to_matrix(head, env))
+		return (map_list_free(&head), error_exit(env,
+				ERROR_MSG_MATRIX_ALLOCATION_FAIL, ERROR_MAP_READ_ERROR));
+	map_list_free(&head);
+	if (!map_validate_player(&env->map))
+		error_exit(env, ERROR_MSG_INVALID_PLAYER_COUNT, ERROR_MAP_READ_ERROR);
+	if (!map_validate_rules(&env->map))
+		error_exit(env, ERROR_MSG_MAP_RULES_VIOLATION, ERROR_MAP_READ_ERROR);
 }

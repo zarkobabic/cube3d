@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/09 00:16:30 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/10 21:44:54 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include "map_linked_list.h"
 
 # define WINDOW_WIDTH 1000
 # define WINDOW_HEIGHT 500
@@ -80,12 +79,30 @@ void			env_destroy(t_env *env);
 // MAP
 void			map_destroy(t_map *map);
 void			map_init(t_env *env);
-// TODO: JUST FOR TESTING DELETE AFTER
+// TODO: just for testing delete after
 void			test_map_print(t_env *env);
-// MAP_PARSING
-void			map_parse(t_env *env, char *map_file_path);
-void			map_parse_check_file_extension(t_env *env, char *map_file_path);
-void			map_parse_matrix(t_env *env, char *first_line);
 // PLAYER
 void			player_init(t_player *player);
+
+//----PARSING----
+
+// FILE_PARSING
+bool			is_whitespace(char c);
+void			file_parsing(t_env *env, char *map_file_path);
+void			file_check_extension(t_env *env, char *map_file_path);
+// FILE_ELEMENTS_PARSING
+void			file_check_all_elements_parsed(char *line, t_env *env);
+void			file_parse_one_element(char *line, t_env *env);
+// FILE_SINGLE_ELEMENT_PARSING
+void			parse_texture(char *line, char **texture, t_env *env);
+void			parse_rgb(char *line, int *color_loc_to_fill, t_env *env);
+// MAP_PARSING
+void			map_parsing(t_env *env, char *first_line);
+char			*map_pad_line_with_spaces(char *line, int target_width);
+// MAP_VALIDATION
+bool			map_validate_char(char c);
+bool			map_validate_rules(t_map *map);
+bool			map_validate_player(t_map *map);
+
+//---------------
 #endif

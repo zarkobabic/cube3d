@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parse_linked_list.c                            :+:      :+:    :+:   */
+/*   map_linked_list.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 16:07:11 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/09 00:04:35 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/10 21:40:22 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
+#include "map_linked_list.h"
 
-t_map_line	*create_map_node(char *line)
+t_map_line	*map_list_create_node(char *line)
 {
 	t_map_line	*node;
 
@@ -24,7 +25,7 @@ t_map_line	*create_map_node(char *line)
 	return (node);
 }
 
-void	add_map_line(t_map_line **head, t_map_line **tail,
+void	map_list_add(t_map_line **head, t_map_line **tail,
 		t_map_line *new_node)
 {
 	if (!*head)
@@ -37,7 +38,7 @@ void	add_map_line(t_map_line **head, t_map_line **tail,
 	*tail = new_node;
 }
 
-void	free_map_list(t_map_line **head)
+void	map_list_free(t_map_line **head)
 {
 	t_map_line	*tmp;
 
@@ -48,4 +49,26 @@ void	free_map_list(t_map_line **head)
 		free(tmp->line);
 		free(tmp);
 	}
+}
+
+bool	map_list_to_matrix(t_map_line *head, t_env *env)
+{
+	int			i;
+	t_map_line	*current;
+
+	env->map.matrix = malloc(sizeof(char *) * (env->map.rows));
+	if (!env->map.matrix)
+		return (false);
+	i = 0;
+	current = head;
+	while (current && i < env->map.rows)
+	{
+		env->map.matrix[i] = map_pad_line_with_spaces(current->line,
+				env->map.cols);
+		if (!env->map.matrix[i])
+			return (false);
+		current = current->next;
+		++i;
+	}
+	return (true);
 }
