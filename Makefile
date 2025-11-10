@@ -6,7 +6,7 @@
 #    By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/10 21:36:12 by zbabic           ###   ########.fr        #
+#    Updated: 2025/11/10 21:59:25 by zbabic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,16 +33,16 @@ LIBMLX_FILE = $(LIBMLX_FOLDER)/build/libmlx42.a
 LIBFT_FILE = $(LIBFT_FOLDER)/libft.a
 SRC_FILES = env.c \
 			error.c \
-			file_elements_parsing.c \
-			file_parsing.c \
-			file_single_element_parsing.c \
 			main.c \
-			map_linked_list.c \
-			map_parsing.c \
-			map_validation.c \
 			map.c \
 			mlx_operations.c \
 			player.c \
+			parsing/file_elements_parsing.c \
+			parsing/file_parsing.c \
+			parsing/file_single_element_parsing.c \
+			parsing/map_linked_list.c \
+			parsing/map_parsing.c \
+			parsing/map_validation.c \
 
 OBJ_FILES = $(addprefix $(OBJ_FOLDER)/, $(SRC_FILES:.c=.o))
 
@@ -66,6 +66,7 @@ $(OBJ_FOLDER)/%.o: $(SRC_FOLDER)/%.c | $(OBJ_FOLDER)
 
 $(OBJ_FOLDER):
 	@mkdir -p $@
+	@mkdir -p $@/parsing
 
 delete_repo:
 	$(REMOVE) $(LIBMLX_FOLDER)
