@@ -6,7 +6,7 @@
 #    By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/10 21:59:25 by zbabic           ###   ########.fr        #
+#    Updated: 2025/11/11 12:10:45 by zbabic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,18 +31,20 @@ INCLUDES = -I$(INC_FOLDER) -I$(LIBFT_FOLDER) -I$(LIBMLX_FOLDER)/include/MLX42
 
 LIBMLX_FILE = $(LIBMLX_FOLDER)/build/libmlx42.a
 LIBFT_FILE = $(LIBFT_FOLDER)/libft.a
-SRC_FILES = env.c \
-			error.c \
-			main.c \
-			map.c \
-			mlx_operations.c \
-			player.c \
-			parsing/file_elements_parsing.c \
+SRC_FILES = parsing/file_elements_parsing.c \
 			parsing/file_parsing.c \
 			parsing/file_single_element_parsing.c \
 			parsing/map_linked_list.c \
 			parsing/map_parsing.c \
 			parsing/map_validation.c \
+			rendering/elements_rendering.c \
+			env.c \
+			error.c \
+			main.c \
+			map.c \
+			minimap.c \
+			mlx_operations.c \
+			player.c \
 
 OBJ_FILES = $(addprefix $(OBJ_FOLDER)/, $(SRC_FILES:.c=.o))
 
@@ -67,6 +69,7 @@ $(OBJ_FOLDER)/%.o: $(SRC_FOLDER)/%.c | $(OBJ_FOLDER)
 $(OBJ_FOLDER):
 	@mkdir -p $@
 	@mkdir -p $@/parsing
+	@mkdir -p $@/rendering
 
 delete_repo:
 	$(REMOVE) $(LIBMLX_FOLDER)

@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/10 21:44:54 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/11 13:52:08 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,13 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <math.h>
 
 # define WINDOW_WIDTH 1000
 # define WINDOW_HEIGHT 500
+# define TILE_SIZE 30
+# define FOV 60
+# define RES 1
 
 # define MAP_EMPTY '0'
 # define MAP_WALL '1'
@@ -39,11 +43,23 @@
 # define COLOR_R 0
 # define COLOR_G 1
 # define COLOR_B 2
+# define COLOR_WALL 0
+# define COLOR_EMPTY 0xFFFFFFFF
+# define COLOR_PLAYER 0xff4040d9
+# define COLOR_SPACE 0x00000059
+# define COLOR_BACKGROUND 0xFF
+
+typedef struct s_point
+{
+	int			x;
+	int			y;
+}				t_point;
 
 typedef struct s_player
 {
-	int			coordinates[2];
+	t_point		pos;
 	char		player_dir;
+	double		fov_rad;
 }				t_player;
 
 typedef struct s_map
@@ -73,6 +89,7 @@ typedef struct s_env
 
 // MLX
 void			mlx_initialization(t_env *env);
+void			mlx_destroy(t_env *env);
 // ENV
 void			env_init(t_env *env);
 void			env_destroy(t_env *env);
@@ -105,4 +122,14 @@ bool			map_validate_rules(t_map *map);
 bool			map_validate_player(t_map *map);
 
 //---------------
+
+//ELEMENTS_RENDERING
+void	reset_background(t_env *env);
+void	draw_square(t_env *env, int size, t_point *left_corner,
+		unsigned int color);
+void	draw_filled_circle(t_env *env, t_point *center, int radius, int color);
+//MINIMAP
+void	init_minimap(t_env *env);
+void	draw_minimap(t_env *env);
+
 #endif

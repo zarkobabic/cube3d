@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:20:29 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/10 21:26:36 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/11 11:13:48 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	parse_rgb(char *line, int *color_loc_to_fill, t_env *env)
 	free_split(&split);
 }
 
+//TODO: Maybe needs check if its readable texture file with open and O_READ
 void	parse_texture(char *line, char **texture, t_env *env)
 {
 	int		i;

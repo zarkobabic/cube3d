@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/09 15:48:29 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/11 13:56:04 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	map_init(t_env *env)
 	map->floor_color = -1;
 	map->ceiling_color = -1;
 	map->map_file_fd = -1;
+	map->tile_size = TILE_SIZE;
 	player_init(&map->player);
 }
 

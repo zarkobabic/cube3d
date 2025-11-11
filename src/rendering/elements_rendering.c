@@ -1,0 +1,89 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   elements_rendering.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/11 12:06:07 by zbabic            #+#    #+#             */
+/*   Updated: 2025/11/11 13:38:41 by zbabic           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cube3d.h"
+
+void	reset_background(t_env *env)
+{
+	int	x;
+	int	y;
+
+	x = -1;
+	while (++x < env->win_width)
+	{
+		y = -1;
+		while (++y < env->win_height)
+			mlx_put_pixel(env->img, x, y, COLOR_BACKGROUND);
+	}
+}
+
+static void	draw_circle_lines(t_env *env, t_point *center, t_point *iterator,
+		int color)
+{
+	int	i;
+
+	i = center->x - iterator->x;
+	while (i <= center->x + iterator->x)
+	{
+		mlx_put_pixel(env->img, i, center->y + iterator->y, color);
+		mlx_put_pixel(env->img, i, center->y - iterator->y, color);
+		++i;
+	}
+	i = center->x - iterator->y;
+	while (i <= center->x + iterator->y)
+	{
+		mlx_put_pixel(env->img, i, center->y + iterator->x, color);
+		mlx_put_pixel(env->img, i, center->y - iterator->x, color);
+		++i;
+	}
+}
+
+void	draw_filled_circle(t_env *env, t_point *center, int radius, int color)
+{
+	t_point	iterator;
+	int		d;
+
+	iterator.x = 0;
+	iterator.y = radius;
+	d = 3 - 2 * radius;
+	while (iterator.y >= iterator.x)
+	{
+		draw_circle_lines(env, center, &iterator, color);
+		++iterator.x;
+		if (d > 0)
+		{
+			--iterator.y;
+			d = d + 4 * (iterator.x - iterator.y) + 10;
+		}
+		else
+			d = d + 4 * iterator.x + 6;
+	}
+}
+
+void	draw_square(t_env *env, int size, t_point *left_corner,
+		unsigned int color)
+{
+	int	x;
+	int	y;
+
+	y = left_corner->y;
+	while (y < left_corner->y + size)
+	{
+		x = left_corner->x;
+		while (x < left_corner->x + size)
+		{
+			mlx_put_pixel(env->img, x, y, color);
+			++x;
+		}
+		++y;
+	}
+}
