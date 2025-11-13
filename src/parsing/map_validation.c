@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 20:51:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/11 13:59:11 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/11 17:50:43 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ bool	map_validate_player(t_map *map)
 			{
 				map->player.pos.y = (int)(i * map->tile_size + (map->tile_size / 2));
 				map->player.pos.x = (int)(j * map->tile_size + (map->tile_size / 2));
-				map->player.player_dir = map->matrix[i][j];
+				player_set_starting_orientation(&map->player, map->matrix[i][j]);
 				player_count++;
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/11 13:52:08 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/11 18:18:01 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define WINDOW_HEIGHT 500
 # define TILE_SIZE 30
 # define FOV 60
+# define PLAYER_RADIUS 2
 # define RES 1
 
 # define MAP_EMPTY '0'
@@ -58,8 +59,10 @@ typedef struct s_point
 typedef struct s_player
 {
 	t_point		pos;
-	char		player_dir;
 	double		fov_rad;
+	double		rot_angle;
+	double		rot_speed;
+	double		move_speed;
 }				t_player;
 
 typedef struct s_map
@@ -100,6 +103,7 @@ void			map_init(t_env *env);
 void			test_map_print(t_env *env);
 // PLAYER
 void			player_init(t_player *player);
+void			player_set_starting_orientation(t_player *player, char starting_orientation);
 
 //----PARSING----
 
@@ -128,8 +132,12 @@ void	reset_background(t_env *env);
 void	draw_square(t_env *env, int size, t_point *left_corner,
 		unsigned int color);
 void	draw_filled_circle(t_env *env, t_point *center, int radius, int color);
+//LINE_RENDERING
+void	draw_line(t_env *env, t_point *starting, t_point *ending, int color);
 //MINIMAP
 void	init_minimap(t_env *env);
 void	draw_minimap(t_env *env);
+//UTILITIES
+double	deg_to_rad(int degrees);
 
 #endif

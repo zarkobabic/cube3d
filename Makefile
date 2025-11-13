@@ -6,7 +6,7 @@
 #    By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/11 12:10:45 by zbabic           ###   ########.fr        #
+#    Updated: 2025/11/11 17:40:45 by zbabic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC_FILES = parsing/file_elements_parsing.c \
 			parsing/map_parsing.c \
 			parsing/map_validation.c \
 			rendering/elements_rendering.c \
+			rendering/line_rendering.c \
 			env.c \
 			error.c \
 			main.c \
@@ -45,6 +46,7 @@ SRC_FILES = parsing/file_elements_parsing.c \
 			minimap.c \
 			mlx_operations.c \
 			player.c \
+			utilities.c
 
 OBJ_FILES = $(addprefix $(OBJ_FOLDER)/, $(SRC_FILES:.c=.o))
 
