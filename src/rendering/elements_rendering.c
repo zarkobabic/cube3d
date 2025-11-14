@@ -6,25 +6,11 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:06:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/11 13:38:41 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/14 02:09:11 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
-
-void	reset_background(t_env *env)
-{
-	int	x;
-	int	y;
-
-	x = -1;
-	while (++x < env->win_width)
-	{
-		y = -1;
-		while (++y < env->win_height)
-			mlx_put_pixel(env->img, x, y, COLOR_BACKGROUND);
-	}
-}
 
 static void	draw_circle_lines(t_env *env, t_point *center, t_point *iterator,
 		int color)
@@ -47,17 +33,21 @@ static void	draw_circle_lines(t_env *env, t_point *center, t_point *iterator,
 	}
 }
 
-void	draw_filled_circle(t_env *env, t_point *center, int radius, int color)
+void	draw_filled_circle(t_env *env, t_point_double *center_double,
+		int radius, int color)
 {
+	t_point	center;
 	t_point	iterator;
 	int		d;
 
+	center.x = (int)center_double->x;
+	center.y = (int)center_double->y;
 	iterator.x = 0;
 	iterator.y = radius;
 	d = 3 - 2 * radius;
 	while (iterator.y >= iterator.x)
 	{
-		draw_circle_lines(env, center, &iterator, color);
+		draw_circle_lines(env, &center, &iterator, color);
 		++iterator.x;
 		if (d > 0)
 		{

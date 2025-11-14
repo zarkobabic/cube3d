@@ -6,7 +6,7 @@
 #    By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/11 17:40:45 by zbabic           ###   ########.fr        #
+#    Updated: 2025/11/14 00:58:45 by zbabic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,11 +39,14 @@ SRC_FILES = parsing/file_elements_parsing.c \
 			parsing/map_validation.c \
 			rendering/elements_rendering.c \
 			rendering/line_rendering.c \
+			rendering/scene_rendering.c \
 			env.c \
 			error.c \
+			game_loop.c \
 			main.c \
 			map.c \
 			minimap.c \
+			mlx_key_handlers.c \
 			mlx_operations.c \
 			player.c \
 			utilities.c

@@ -6,12 +6,18 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:15 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/11 12:29:45 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/14 01:10:18 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 #include "error.h"
+
+static void	mlx_register_hooks(t_env *env)
+{
+	mlx_key_hook(env->win, key_handler, env);
+	mlx_loop_hook(env->win, game_loop, env);
+}
 
 void	mlx_initialization(t_env *env)
 {
@@ -30,6 +36,7 @@ void	mlx_initialization(t_env *env)
 			ERROR_CODE_MLX_ERROR);
 	env->win = mlx;
 	env->img = img;
+	mlx_register_hooks(env);
 }
 
 void	mlx_destroy(t_env *env)
