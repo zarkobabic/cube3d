@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 00:03:10 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/15 23:11:03 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/16 00:18:24 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ void	render_scene(t_env *env)
 {
 	reset_background(env);
 	// TODO: Draw ceiling/floor
-	// TODO: Raycast and draw walls
-	// - change first to cast_all_rays and then
-	// draw minimap when we change to "3d"
-	// draw_minimap(env);
 	render_all_rays(env, (int)(env->win_width / RES));
+	draw_minimap(env);
 }

@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/15 18:19:28 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/16 00:17:55 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define WINDOW_WIDTH 1000
-# define WINDOW_HEIGHT 500
+# define WINDOW_WIDTH 2200
+# define WINDOW_HEIGHT 1100
 # define TILE_SIZE 30
 # define FOV 60
 # define PLAYER_RADIUS 2
@@ -29,6 +29,8 @@
 # define MOVE_SPEED 1
 # define RES 1
 # define WALL_HEIGHT TILE_SIZE
+# define MINIMAP_RATIO 0.2
+# define MINIMAP_MARGIN 10
 
 # define MAP_EMPTY '0'
 # define MAP_WALL '1'
@@ -92,6 +94,9 @@ typedef struct s_map
 	int				cols;
 	int				tile_size;
 	char			**matrix;
+	int				minimap_tile_size;
+	int				minimap_position_x;
+	int				minimap_position_y;
 	char			*no_texture;
 	char			*so_texture;
 	char			*we_texture;
@@ -121,6 +126,7 @@ void				map_destroy(t_map *map);
 void				map_init(t_env *env);
 // TODO: just for testing delete after
 void				test_map_print(t_env *env);
+void				map_resize_screen(t_env *env);
 // PLAYER
 void				player_init(t_player *player);
 void				player_set_starting_orientation(t_player *player,
@@ -171,6 +177,7 @@ double				get_distance_squared(t_point_double *point,
 void				init_minimap(t_env *env);
 void				draw_minimap(t_env *env);
 bool				has_wall_at(t_env *env, t_point *point_in_pixel);
+void				render_all_rays_minimap(t_env *env, int num_rays);
 // UTILITIES
 double				deg_to_rad(int degrees);
 //--------------

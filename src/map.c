@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/11 13:56:04 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/16 00:11:55 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ void	map_init(t_env *env)
 	player_init(&map->player);
 }
 
+void	map_resize_screen(t_env *env)
+{
+	env->map.tile_size = (int)fmin(env->win_height / env->map.rows,
+			env->win_width / env->map.cols);
+	env->win_width = env->map.tile_size * env->map.cols;
+	env->win_height = env->map.tile_size * env->map.rows;
+}
+
 void	test_map_print(t_env *env)
 {
 	int	i;
@@ -75,7 +83,7 @@ void	test_map_print(t_env *env)
 	printf("map_file_fd: %d|\n", env->map.map_file_fd);
 	printf("rows: %d|\n", env->map.rows);
 	printf("cols: %d|\n", env->map.cols);
-	//printf("tile_size: %d|\n", env->map.tile_size);
+	// printf("tile_size: %d|\n", env->map.tile_size);
 	printf("no_texture: %s|\n", env->map.no_texture);
 	printf("so_texture: %s|\n", env->map.so_texture);
 	printf("we_texture: %s|\n", env->map.we_texture);

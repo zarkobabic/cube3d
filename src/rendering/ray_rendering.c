@@ -6,20 +6,27 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:00:26 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/15 23:12:53 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/16 00:15:58 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-// static void	render_ray(t_env *env, t_point *wall_collision_point)
-// {
-// 	t_point	starting;
+static void	render_ray_on_minimap(t_env *env, t_point *wall_collision_point)
+{
+	t_point	minimap_starting;
+	t_point	minimap_collision;
 
-// 	starting.x = (int)env->map.player.pos.x;
-// 	starting.y = (int)env->map.player.pos.y;
-// 	draw_line(env, &starting, wall_collision_point, COLOR_PLAYER);
-// }
+	minimap_starting.x = env->map.minimap_position_x + (env->map.player.pos.x
+			* MINIMAP_RATIO);
+	minimap_starting.y = env->map.minimap_position_y + (env->map.player.pos.y
+			* MINIMAP_RATIO);
+	minimap_collision.x = env->map.minimap_position_x + (wall_collision_point->x
+			* MINIMAP_RATIO);
+	minimap_collision.y = env->map.minimap_position_y + (wall_collision_point->y
+			* MINIMAP_RATIO);
+	draw_line(env, &minimap_starting, &minimap_collision, COLOR_PLAYER);
+}
 
 void	render_wall_projectin_for_ray(t_env *env, double ray_angle,
 		t_point *wall_collision_p, int i)
@@ -48,6 +55,25 @@ void	render_wall_projectin_for_ray(t_env *env, double ray_angle,
 	draw_line(env, &wall_start, &wall_end, COLOR_PLAYER);
 }
 
+void	render_all_rays_minimap(t_env *env, int num_rays)
+{
+	double	initial_angle;
+	double	increment;
+	int		i;
+	t_point	wall_collision_point;
+
+	i = 0;
+	increment = env->map.player.fov_rad / (num_rays - 1);
+	initial_angle = env->map.player.rot_angle - env->map.player.fov_rad * 0.5;
+	while (i < num_rays)
+	{
+		cast_ray(initial_angle, &wall_collision_point, env);
+		render_ray_on_minimap(env, &wall_collision_point);
+		initial_angle += increment;
+		++i;
+	}
+}
+
 void	render_all_rays(t_env *env, int num_rays)
 {
 	double	initial_angle;
@@ -61,7 +87,7 @@ void	render_all_rays(t_env *env, int num_rays)
 	while (i < num_rays)
 	{
 		cast_ray(initial_angle, &wall_collision_point, env);
-		// render_ray(env, &wall_collision_point);
+		// render_ray_on_minimap(env, &wall_collision_point);
 		render_wall_projectin_for_ray(env, initial_angle, &wall_collision_point,
 			i);
 		initial_angle += increment;
