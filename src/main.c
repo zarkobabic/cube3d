@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:15:43 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/14 01:21:49 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/14 23:42:14 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ int	main(int argc, char **argv)
 	test_map_print(&env);
 	init_minimap(&env);
 	mlx_initialization(&env);
-	reset_background(&env);
-	draw_minimap(&env);
+	render_scene(&env);
 	mlx_loop(env.win);
 	mlx_destroy(&env);
 	env_destroy(&env);

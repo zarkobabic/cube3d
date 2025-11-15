@@ -6,16 +6,20 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:48:42 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/14 02:07:56 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/15 02:09:42 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube3d.h"
 
-bool	has_wall_at(t_env *env, int pixel_x, int pixel_y)
+bool	has_wall_at(t_env *env, t_point *point_in_pixel)
 {
-	return (env->map.matrix[(int)floor(pixel_x)][(int)floor(pixel_y)]
-		== MAP_WALL);
+	int	tile_size;
+
+	tile_size = env->map.tile_size;
+	return (env->map.matrix[(int)floor(point_in_pixel->y
+				/ tile_size)][(int)floor(point_in_pixel->x
+			/ tile_size)] == MAP_WALL);
 }
 
 void	init_minimap(t_env *env)
@@ -38,19 +42,19 @@ void	draw_tile(t_env *env, int x, int y)
 		draw_square(env, env->map.tile_size - 1, &corner, COLOR_EMPTY);
 }
 
-void static	draw_orientation_line(t_env *env)
-{
-	t_player	*player;
-	t_point		starting;
-	t_point		ending;
+// void static	draw_orientation_line(t_env *env)
+// {
+// 	t_player	*player;
+// 	t_point		starting;
+// 	t_point		ending;
 
-	player = &env->map.player;
-	starting.x = (int)player->pos.x;
-	starting.y = (int)player->pos.y;
-	ending.x = player->pos.x + cos(player->rot_angle) * 50;
-	ending.y = player->pos.y + sin(player->rot_angle) * 50;
-	draw_line(env, &starting, &ending, COLOR_PLAYER);
-}
+// 	player = &env->map.player;
+// 	starting.x = (int)player->pos.x;
+// 	starting.y = (int)player->pos.y;
+// 	ending.x = player->pos.x + cos(player->rot_angle) * 50;
+// 	ending.y = player->pos.y + sin(player->rot_angle) * 50;
+// 	draw_line(env, &starting, &ending, COLOR_PLAYER);
+// }
 
 void	draw_minimap(t_env *env)
 {
@@ -69,5 +73,5 @@ void	draw_minimap(t_env *env)
 		++y;
 	}
 	draw_filled_circle(env, &env->map.player.pos, PLAYER_RADIUS, COLOR_PLAYER);
-	draw_orientation_line(env);
+	// draw_orientation_line(env);
 }

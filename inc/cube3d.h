@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/14 02:06:37 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/15 02:08:34 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,15 @@ void				draw_filled_circle(t_env *env, t_point_double *center,
 // LINE_RENDERING
 void				draw_line(t_env *env, t_point *starting, t_point *ending,
 						int color);
+// RAY RENDERING
+void				render_all_rays(t_env *env, int num_rays);
+// RAYCASTING
+void				cast_ray(double ray_angle, t_point *wall_collision_point,
+						t_env *env);
 // MINIMAP
 void				init_minimap(t_env *env);
 void				draw_minimap(t_env *env);
+bool				has_wall_at(t_env *env, t_point *point_in_pixel);
 // UTILITIES
 double				deg_to_rad(int degrees);
 //--------------

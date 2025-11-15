@@ -6,7 +6,7 @@
 #    By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/14 00:58:45 by zbabic           ###   ########.fr        #
+#    Updated: 2025/11/15 01:00:38 by zbabic           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC_FILES = parsing/file_elements_parsing.c \
 			rendering/elements_rendering.c \
 			rendering/line_rendering.c \
 			rendering/scene_rendering.c \
+			rendering/ray_rendering.c \
 			env.c \
 			error.c \
 			game_loop.c \
@@ -49,6 +50,7 @@ SRC_FILES = parsing/file_elements_parsing.c \
 			mlx_key_handlers.c \
 			mlx_operations.c \
 			player.c \
+			raycasting.c \
 			utilities.c
 
 OBJ_FILES = $(addprefix $(OBJ_FOLDER)/, $(SRC_FILES:.c=.o))
