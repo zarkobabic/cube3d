@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:50:22 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/15 18:12:51 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/16 00:24:11 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	find_first_horizontal_intersection(
 	if (is_facing_down)
 		first_intersection.y = floor(p.y / tile_size) * tile_size + tile_size;
 	else
-		first_intersection.y = floor(p.y / tile_size) * tile_size - 1;
+		first_intersection.y = floor(p.y / tile_size) * tile_size - 0.000001;
 	first_intersection.x = p.x + (first_intersection.y - p.y) / tan(ray_angle);
 	*next_intersection = first_intersection;
 }
@@ -71,7 +71,7 @@ static void	find_first_vertical_intersection(t_point_double *next_intersection,
 	if (is_facing_right)
 		first_intersection.x = floor(p.x / tile_size) * tile_size + tile_size;
 	else
-		first_intersection.x = floor(p.x / tile_size) * tile_size - 1;
+		first_intersection.x = floor(p.x / tile_size) * tile_size - 0.000001;
 	first_intersection.y = p.y + (first_intersection.x - p.x) * tan(ray_angle);
 	*next_intersection = first_intersection;
 }

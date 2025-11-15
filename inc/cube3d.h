@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/16 00:17:55 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/16 00:27:54 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
 # define FOV 60
 # define PLAYER_RADIUS 2
 # define ROTATION_SPEED 0.05
-# define MOVE_SPEED 1
+# define MOVE_SPEED 3
 # define RES 1
-# define WALL_HEIGHT TILE_SIZE
+# define WALL_HEIGHT 100
 # define MINIMAP_RATIO 0.2
 # define MINIMAP_MARGIN 10
 
