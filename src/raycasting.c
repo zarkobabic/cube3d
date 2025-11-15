@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:50:22 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/15 02:11:59 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/15 18:12:51 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static bool	check_vertical_walls(t_point_double *vertical_intersection,
 	return (false);
 }
 
-static double	get_distance_squared(t_point_double *point,
+double	get_distance_squared(t_point_double *point,
 		t_point_double *player_pos)
 {
 	double	dx;

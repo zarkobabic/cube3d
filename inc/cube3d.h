@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/15 02:08:34 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/15 18:19:28 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define ROTATION_SPEED 0.05
 # define MOVE_SPEED 1
 # define RES 1
+# define WALL_HEIGHT TILE_SIZE
 
 # define MAP_EMPTY '0'
 # define MAP_WALL '1'
@@ -164,6 +165,8 @@ void				render_all_rays(t_env *env, int num_rays);
 // RAYCASTING
 void				cast_ray(double ray_angle, t_point *wall_collision_point,
 						t_env *env);
+double				get_distance_squared(t_point_double *point,
+						t_point_double *player_pos);
 // MINIMAP
 void				init_minimap(t_env *env);
 void				draw_minimap(t_env *env);
