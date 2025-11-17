@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:20:29 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/11 11:13:48 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/17 15:03:03 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	parse_rgb(char *line, int *color_loc_to_fill, t_env *env)
 		return (free(line - 2), free_split(&split), error_exit(env,
 				ERROR_MSG_WRONG_COLOR_COMPONENT_RANGE,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
-	*color_loc_to_fill = (rgb[COLOR_R] << 16 | rgb[COLOR_G] << 8
-			| rgb[COLOR_B]);
+	*color_loc_to_fill = (rgb[COLOR_R] << 24 | rgb[COLOR_G] << 16
+			| rgb[COLOR_B] << 8 | 0xFF);
 	free_split(&split);
 }
 

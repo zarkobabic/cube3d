@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:00:26 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/16 00:15:58 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/17 14:59:51 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	render_wall_projectin_for_ray(t_env *env, double ray_angle,
 		wall_start.y = 0;
 	if (wall_end.y >= env->win_height)
 		wall_end.y = env->win_height - 1;
+	render_floor(env, &wall_end);
+	render_ceiling(env, &wall_start);
 	draw_line(env, &wall_start, &wall_end, COLOR_PLAYER);
 }
 

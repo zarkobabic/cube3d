@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/16 00:27:54 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/17 15:11:22 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ bool				map_validate_player(t_map *map);
 // SCENE_RENDERING
 void				reset_background(t_env *env);
 void				render_scene(t_env *env);
+void				render_ceiling(t_env *env, t_point *wall_end);
+void				render_floor(t_env *env, t_point *wall_end);
 
 // ELEMENTS_RENDERING
 void				draw_square(t_env *env, int size, t_point *left_corner,
