@@ -6,7 +6,7 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/16 00:11:55 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/17 21:16:26 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,15 @@ void	map_init(t_env *env)
 
 void	map_resize_screen(t_env *env)
 {
+	t_player	*player;
+
+	player = &env->map.player;
 	env->map.tile_size = (int)fmin(env->win_height / env->map.rows,
 			env->win_width / env->map.cols);
 	env->win_width = env->map.tile_size * env->map.cols;
 	env->win_height = env->map.tile_size * env->map.rows;
+	player->pos.y = (int)((player->pos.y + 0.5) * env->map.tile_size);
+	player->pos.x = (int)((player->pos.x + 0.5) * env->map.tile_size);
 }
 
 void	test_map_print(t_env *env)
