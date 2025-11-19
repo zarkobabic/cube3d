@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ray_rendering.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:00:26 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/17 14:59:51 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 static void	render_ray_on_minimap(t_env *env, t_point *wall_collision_point)
 {

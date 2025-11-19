@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   line_rendering.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 17:08:15 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/14 02:08:51 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 static int	calculate_step(int starting_point, int ending_point)
 {

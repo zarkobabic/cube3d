@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+         #
+#    By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/15 01:00:38 by zbabic           ###   ########.fr        #
+#    Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LFLAGS = -ldl -lglfw -pthread -lm -L"/opt/homebrew/opt/glfw/lib/" #macOS
 COMPILER_DEBUG_ENABLED = -g
 C_MAKE_DEBUG = -DDEBUG=1
 REMOVE = rm -rf
-NAME = cube3d
+NAME = cub3d
 
 LIBMLX_REPO_URL = https://github.com/codam-coding-college/MLX42.git
 

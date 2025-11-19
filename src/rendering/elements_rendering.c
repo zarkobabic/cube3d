@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   elements_rendering.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:06:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/14 02:09:11 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 
 static void	draw_circle_lines(t_env *env, t_point *center, t_point *iterator,
 		int color)

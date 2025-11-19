@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   file_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:32:03 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/14 00:12:33 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 18:13:54 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 #include "error.h"
 #include <fcntl.h>
 #include <unistd.h>
@@ -24,7 +24,7 @@ void	file_check_extension(t_env *env, char *map_file_path)
 	if (len < 4)
 		error_exit(env, ERROR_MSG_WRONG_FILE_EXTENSION,
 			ERROR_CODE_FILE_SYSTEM_ERROR);
-	has_no_extension = ft_strncmp(&map_file_path[len - 4], ".pub", 5);
+	has_no_extension = ft_strncmp(&map_file_path[len - 4], ".cub", 5);
 	if (has_no_extension)
 		error_exit(env, ERROR_MSG_WRONG_FILE_EXTENSION,
 			ERROR_CODE_FILE_SYSTEM_ERROR);

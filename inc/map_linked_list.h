@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   map_linked_list.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 22:48:51 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/10 21:47:00 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_LINKED_LIST_H
 # define MAP_LINKED_LIST_H
 
-# include "cube3d.h"
+# include "cub3d.h"
 
 typedef struct s_map_line
 {

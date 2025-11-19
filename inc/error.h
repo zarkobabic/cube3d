@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:47:04 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/09 22:50:30 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 18:13:54 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 
-# include "cube3d.h"
+# include "cub3d.h"
 
 # define ERROR_MSG_WRONG_NUMBER_OF_PARAMETERS  \
 "Error\n Invalid number of parameters. Expected exactly 2 parameters."
@@ -22,7 +22,7 @@
 # define ERROR_MSG_MLX_WINDOW_CREATION_FAILED \
 "Error\n Window creation failed in MLX library."
 # define ERROR_MSG_WRONG_FILE_EXTENSION \
-"Error\n Invalid file extension. Expected a .pub map file."
+"Error\n Invalid file extension. Expected a .cub map file."
 # define ERROR_MSG_MLX_INIT_FAIL \
 "Error\n MLX library initialization failed."
 # define ERROR_MSG_UNABLE_TO_OPEN_FILE \

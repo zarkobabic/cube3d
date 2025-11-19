@@ -6,11 +6,11 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:16:44 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:02:51 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cube3d.h"
+#include "cub3d.h"
 #include "error.h"
 
 static bool	file_check_valid_color_element(char *line, char *color_type,
