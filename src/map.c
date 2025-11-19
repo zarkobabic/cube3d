@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/17 21:16:26 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 18:00:54 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ void	map_init(t_env *env)
 	map->matrix = NULL;
 	map->rows = -1;
 	map->cols = -1;
-	map->floor_color = -1;
-	map->ceiling_color = -1;
+	map->floor_color = 0;
+	map->floor_color_set = false;
+	map->ceiling_color = 0;
+	map->ceiling_color_set = false;
 	map->map_file_fd = -1;
 	map->tile_size = TILE_SIZE;
 	player_init(&map->player);

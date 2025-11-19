@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube3d.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/17 15:11:22 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 17:59:49 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,10 @@ typedef struct s_map
 	char			*so_texture;
 	char			*we_texture;
 	char			*ea_texture;
-	int				floor_color;
-	int				ceiling_color;
+	unsigned int	floor_color;
+	unsigned int	ceiling_color;
+	bool			floor_color_set;
+	bool			ceiling_color_set;
 	t_player		player;
 }					t_map;
 
@@ -143,7 +145,7 @@ void				file_check_all_elements_parsed(char *line, t_env *env);
 void				file_parse_one_element(char *line, t_env *env);
 // FILE_SINGLE_ELEMENT_PARSING
 void				parse_texture(char *line, char **texture, t_env *env);
-void				parse_rgb(char *line, int *color_loc_to_fill, t_env *env);
+void				parse_rgb(char *line, unsigned int *color_loc_to_fill, bool *flag_to_set, t_env *env);
 // MAP_PARSING
 void				map_parsing(t_env *env, char *first_line);
 char				*map_pad_line_with_spaces(char *line, int target_width);

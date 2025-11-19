@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_single_element_parsing.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:20:29 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/17 15:03:03 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 18:02:31 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static void	free_split(char ***split)
 	*split = NULL;
 }
 
-void	parse_rgb(char *line, int *color_loc_to_fill, t_env *env)
+void	parse_rgb(char *line, unsigned int *color_loc_to_fill,
+			bool *flag_to_set, t_env *env)
 {
 	int		i;
 	char	**split;
@@ -55,7 +56,7 @@ void	parse_rgb(char *line, int *color_loc_to_fill, t_env *env)
 				ERROR_CODE_FILE_SYSTEM_ERROR));
 	*color_loc_to_fill = (rgb[COLOR_R] << 24 | rgb[COLOR_G] << 16
 			| rgb[COLOR_B] << 8 | 0xFF);
-	free_split(&split);
+	return (*flag_to_set = true, free_split(&split));
 }
 
 //TODO: Maybe needs check if its readable texture file with open and O_READ

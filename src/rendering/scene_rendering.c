@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_rendering.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 00:03:10 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/17 14:58:38 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 17:44:47 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	render_ceiling(t_env *env, t_point *wall_start)
 void	render_scene(t_env *env)
 {
 	reset_background(env);
-	// TODO: Draw ceiling/floor
 	render_all_rays(env, (int)(env->win_width / RES));
 	draw_minimap(env);
 }

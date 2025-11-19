@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_elements_parsing.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:16:44 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/10 21:36:53 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/11/19 18:02:51 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 #include "error.h"
 
 static bool	file_check_valid_color_element(char *line, char *color_type,
-		int current_color, t_env *env)
+		bool current_color_set, t_env *env)
 {
 	if (ft_strncmp(line, color_type, 2) == 0)
 	{
-		if (current_color != -1)
+		if (current_color_set)
 		{
 			free(line);
 			if (ft_strncmp(color_type, MAP_FLOOR_COLOR, 2) == 0)
@@ -77,10 +77,12 @@ void	file_parse_one_element(char *line, t_env *env)
 		return (parse_texture(line + 3, &env->map.we_texture, env));
 	else if (file_check_valid_color_element(line, MAP_FLOOR_COLOR,
 			env->map.floor_color, env))
-		return (parse_rgb(line + 2, &env->map.floor_color, env));
+		return (parse_rgb(line + 2, &env->map.floor_color,
+			&env->map.floor_color_set, env));
 	else if (file_check_valid_color_element(line, MAP_CEILING_COLOR,
 			env->map.ceiling_color, env))
-		return (parse_rgb(line + 2, &env->map.ceiling_color, env));
+		return (parse_rgb(line + 2, &env->map.ceiling_color,
+			&env->map.ceiling_color_set, env));
 	free(line);
 	error_exit(env, ERROR_MSG_UNEXPECTED_FILE_LINE,
 		ERROR_CODE_FILE_SYSTEM_ERROR);
@@ -100,10 +102,10 @@ void	file_check_all_elements_parsed(char *line, t_env *env)
 	if (!env->map.ea_texture)
 		return (free(line), error_exit(env, ERROR_MSG_MISSING_EA_TEXTURE,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
-	if (env->map.ceiling_color == -1)
+	if (!env->map.ceiling_color_set)
 		return (free(line), error_exit(env, ERROR_MSG_MISSING_CEILING_COLOR,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
-	if (env->map.floor_color == -1)
+	if (!env->map.floor_color_set)
 		return (free(line), error_exit(env, ERROR_MSG_MISSING_FLOOR_COLOR,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
 }
