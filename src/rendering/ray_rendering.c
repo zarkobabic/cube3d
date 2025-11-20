@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:00:26 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/20 19:07:45 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	render_ray_on_minimap(t_env *env, t_point *wall_collision_point)
 	draw_line(env, &minimap_starting, &minimap_collision, COLOR_PLAYER);
 }
 
-void	render_wall_projectin_for_ray(t_env *env, double ray_angle,
+void	render_wall_projection_for_ray(t_env *env, double ray_angle,
 		t_point *wall_collision_p, int i)
 {
 	double			wall_distance;
@@ -90,7 +90,7 @@ void	render_all_rays(t_env *env, int num_rays)
 	{
 		cast_ray(initial_angle, &wall_collision_point, env);
 		// render_ray_on_minimap(env, &wall_collision_point);
-		render_wall_projectin_for_ray(env, initial_angle, &wall_collision_point,
+		render_wall_projection_for_ray(env, initial_angle, &wall_collision_point,
 			i);
 		initial_angle += increment;
 		++i;

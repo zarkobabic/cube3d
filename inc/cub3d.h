@@ -55,6 +55,11 @@
 # define COLOR_SPACE 0x00000059
 # define COLOR_BACKGROUND 0xFF
 
+# define ORIENT_SOUTH 0
+# define ORIENT_EAST 1
+# define WALL_HOR 0
+# define WALL_VER 1
+
 typedef struct s_point
 {
 	int				x;
