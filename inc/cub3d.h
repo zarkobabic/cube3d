@@ -72,6 +72,21 @@ typedef struct s_point_double
 	double			y;
 }					t_point_double;
 
+typedef struct s_texture
+{
+	char			*path;
+	unsigned int	height;
+	unsigned int	width;
+}					t_texture;
+
+typedef struct s_tex_group
+{
+	t_texture		no;
+	t_texture		so;
+	t_texture		we;
+	t_texture		ea;
+}					t_tex_group;
+
 typedef struct s_keys
 {
 	int				w_pressed;
@@ -102,12 +117,9 @@ typedef struct s_map
 	int				minimap_tile_size;
 	int				minimap_position_x;
 	int				minimap_position_y;
-	char			*no_texture;
-	char			*so_texture;
-	char			*we_texture;
-	char			*ea_texture;
 	unsigned int	floor_color;
 	unsigned int	ceiling_color;
+	t_tex_group		textures;
 	bool			floor_color_set;
 	bool			ceiling_color_set;
 	t_player		player;

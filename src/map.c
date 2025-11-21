@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/21 02:46:55 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ void	map_destroy(t_map *map)
 {
 	if (map->map_file_fd != -1)
 		close(map->map_file_fd);
-	if (map->no_texture)
-		free(map->no_texture);
-	if (map->so_texture)
-		free(map->so_texture);
-	if (map->we_texture)
-		free(map->we_texture);
-	if (map->ea_texture)
-		free(map->ea_texture);
+	if (map->textures.no.path)
+		free(map->textures.no.path);
+	if (map->textures.so.path)
+		free(map->textures.so.path);
+	if (map->textures.we.path)
+		free(map->textures.we.path);
+	if (map->textures.ea.path)
+		free(map->textures.ea.path);
 	if (map->matrix)
 		matrix_destroy(&map->matrix, map->rows);
 }
@@ -52,10 +52,10 @@ void	map_init(t_env *env)
 	t_map	*map;
 
 	map = &env->map;
-	map->no_texture = NULL;
-	map->so_texture = NULL;
-	map->we_texture = NULL;
-	map->ea_texture = NULL;
+	map->textures.no.path = NULL;
+	map->textures.so.path = NULL;
+	map->textures.we.path = NULL;
+	map->textures.ea.path = NULL;
 	map->matrix = NULL;
 	map->rows = -1;
 	map->cols = -1;
@@ -91,10 +91,10 @@ void	test_map_print(t_env *env)
 	printf("rows: %d|\n", env->map.rows);
 	printf("cols: %d|\n", env->map.cols);
 	// printf("tile_size: %d|\n", env->map.tile_size);
-	printf("no_texture: %s|\n", env->map.no_texture);
-	printf("so_texture: %s|\n", env->map.so_texture);
-	printf("we_texture: %s|\n", env->map.we_texture);
-	printf("ea_texture: %s|\n", env->map.ea_texture);
+	printf("no_texture: %s|\n", env->map.textures.no.path);
+	printf("so_texture: %s|\n", env->map.textures.so.path);
+	printf("we_texture: %s|\n", env->map.textures.we.path);
+	printf("ea_texture: %s|\n", env->map.textures.ea.path);
 	printf("floor_color: %d|\n", env->map.floor_color);
 	printf("ceiling_color: %d|\n", env->map.ceiling_color);
 	i = 0;

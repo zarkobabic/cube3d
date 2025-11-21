@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:16:44 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/21 02:48:32 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,17 @@ void	file_parse_one_element(char *line, t_env *env)
 	while (is_whitespace(*line))
 		line++;
 	if (file_check_valid_texture_element(line, MAP_NORTH_TEXTURE,
-			env->map.no_texture, env))
-		return (parse_texture(line + 3, &env->map.no_texture, env));
+			env->map.textures.no.path, env))
+		return (parse_texture(line + 3, &env->map.textures.no.path, env));
 	else if (file_check_valid_texture_element(line, MAP_SOUTH_TEXTURE,
-			env->map.so_texture, env))
-		return (parse_texture(line + 3, &env->map.so_texture, env));
+			env->map.textures.so.path, env))
+		return (parse_texture(line + 3, &env->map.textures.so.path, env));
 	else if (file_check_valid_texture_element(line, MAP_EAST_TEXTURE,
-			env->map.ea_texture, env))
-		return (parse_texture(line + 3, &env->map.ea_texture, env));
+			env->map.textures.ea.path, env))
+		return (parse_texture(line + 3, &env->map.textures.ea.path, env));
 	else if (file_check_valid_texture_element(line, MAP_WEST_TEXTURE,
-			env->map.we_texture, env))
-		return (parse_texture(line + 3, &env->map.we_texture, env));
+			env->map.textures.we.path, env))
+		return (parse_texture(line + 3, &env->map.textures.we.path, env));
 	else if (file_check_valid_color_element(line, MAP_FLOOR_COLOR,
 			env->map.floor_color, env))
 		return (parse_rgb(line + 2, &env->map.floor_color,
@@ -90,16 +90,16 @@ void	file_parse_one_element(char *line, t_env *env)
 
 void	file_check_all_elements_parsed(char *line, t_env *env)
 {
-	if (!env->map.no_texture)
+	if (!env->map.textures.no.path)
 		return (free(line), error_exit(env, ERROR_MSG_MISSING_NO_TEXTURE,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
-	if (!env->map.so_texture)
+	if (!env->map.textures.so.path)
 		return (free(line), error_exit(env, ERROR_MSG_MISSING_SO_TEXTURE,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
-	if (!env->map.we_texture)
+	if (!env->map.textures.we.path)
 		return (free(line), error_exit(env, ERROR_MSG_MISSING_WE_TEXTURE,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
-	if (!env->map.ea_texture)
+	if (!env->map.textures.ea.path)
 		return (free(line), error_exit(env, ERROR_MSG_MISSING_EA_TEXTURE,
 				ERROR_CODE_FILE_SYSTEM_ERROR));
 	if (!env->map.ceiling_color_set)
