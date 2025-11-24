@@ -95,6 +95,7 @@ typedef struct s_keys
 	int				d_pressed;
 	int				left_arrow;
 	int				right_arrow;
+	int				lshift;
 }					t_keys;
 
 typedef struct s_player

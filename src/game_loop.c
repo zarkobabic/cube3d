@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 23:46:09 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/24 21:18:42 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/24 21:40:46 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,15 @@ void	handle_collisions(t_env *env, double *dx, double *dy)
 		*dy = 0;
 }
 
+void	handle_sprint(int forward, int shift_pressed, double *dx, double *dy)
+{
+	if (forward > 0 && shift_pressed)
+	{
+		*dx *= 2;
+		*dy *= 2;
+	}
+}
+
 void	move_player_if_necessary(t_player *player, bool *scene_changed, t_env *env)
 {
 	int		forward;
@@ -65,6 +74,7 @@ void	move_player_if_necessary(t_player *player, bool *scene_changed, t_env *env)
 		dx = (dx / length) * player->move_speed;
 		dy = (dy / length) * player->move_speed;
 	}
+	handle_sprint(forward, player->keys.lshift, &dx, &dy);
 	handle_collisions(env, &dx, &dy);
 	player->pos.x += dx;
 	player->pos.y += dy;
