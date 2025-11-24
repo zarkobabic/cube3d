@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 23:46:09 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/24 21:18:42 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,22 @@ void	rotate_camera_if_necessary(t_player *player, bool *scene_changed)
 	}
 }
 
-void	move_player_if_necessary(t_player *player, bool *scene_changed)
+void	handle_collisions(t_env *env, double *dx, double *dy)
+{
+	t_player	*player;
+	char		**map;
+	int			tile_size;
+
+	player = &env->map.player;
+	map = env->map.matrix;
+	tile_size = env->map.tile_size;
+	if (map[(int)(player->pos.y / tile_size)][(int)((player->pos.x + *dx) / tile_size)] == MAP_WALL)
+		*dx = 0;
+	if (map[(int)((player->pos.y + *dy) / tile_size)][(int)(player->pos.x / tile_size)] == MAP_WALL)
+		*dy = 0;
+}
+
+void	move_player_if_necessary(t_player *player, bool *scene_changed, t_env *env)
 {
 	int		forward;
 	int		sideways;
@@ -38,22 +53,22 @@ void	move_player_if_necessary(t_player *player, bool *scene_changed)
 
 	forward = player->keys.w_pressed - player->keys.s_pressed;
 	sideways = player->keys.d_pressed - player->keys.a_pressed;
-	if (forward != 0 || sideways != 0)
+	if (forward == 0 && sideways == 0)
+		return ;
+	dx = forward * cos(player->rot_angle) - sideways
+		* sin(player->rot_angle);
+	dy = forward * sin(player->rot_angle) + sideways
+		* cos(player->rot_angle);
+	length = sqrt(dx * dx + dy * dy);
+	if (length > 0)
 	{
-		dx = forward * cos(player->rot_angle) - sideways
-			* sin(player->rot_angle);
-		dy = forward * sin(player->rot_angle) + sideways
-			* cos(player->rot_angle);
-		length = sqrt(dx * dx + dy * dy);
-		if (length > 0)
-		{
-			dx = (dx / length) * player->move_speed;
-			dy = (dy / length) * player->move_speed;
-		}
-		player->pos.x += dx;
-		player->pos.y += dy;
-		*scene_changed = true;
+		dx = (dx / length) * player->move_speed;
+		dy = (dy / length) * player->move_speed;
 	}
+	handle_collisions(env, &dx, &dy);
+	player->pos.x += dx;
+	player->pos.y += dy;
+	*scene_changed = true;
 }
 
 void	game_loop(void *param)
@@ -64,7 +79,7 @@ void	game_loop(void *param)
 	player = &((t_env *)param)->map.player;
 	scene_changed = false;
 	rotate_camera_if_necessary(player, &scene_changed);
-	move_player_if_necessary(player, &scene_changed);
+	move_player_if_necessary(player, &scene_changed, (t_env *)param);
 	if (scene_changed)
 		render_scene((t_env *)param);
 }
