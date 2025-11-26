@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                           :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 17:59:49 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/27 00:35:12 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ typedef struct s_point_double
 typedef struct s_texture
 {
 	char			*path;
-	unsigned int	height;
-	unsigned int	width;
+	// unsigned int	height; // TODO: delete probably
+	// unsigned int	width;
+	mlx_texture_t	*mlx_tex;
 }					t_texture;
 
 typedef struct s_tex_group
