@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 23:46:09 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/24 21:40:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/26 22:53:49 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ void	rotate_camera_if_necessary(t_player *player, bool *scene_changed)
 	}
 }
 
-void	handle_collisions(t_env *env, double *dx, double *dy)
+static void	handle_collisions(const t_env *env, double *dx, double *dy)
 {
 	t_player	*player;
 	char		**map;
 	int			tile_size;
 
-	player = &env->map.player;
+	player = (t_player *)&env->map.player;
 	map = env->map.matrix;
 	tile_size = env->map.tile_size;
 	if (map[(int)(player->pos.y / tile_size)][(int)((player->pos.x + *dx) / tile_size)] == MAP_WALL)
@@ -43,7 +43,7 @@ void	handle_collisions(t_env *env, double *dx, double *dy)
 		*dy = 0;
 }
 
-void	handle_sprint(int forward, int shift_pressed, double *dx, double *dy)
+static void	handle_sprint(int forward, int shift_pressed, double *dx, double *dy)
 {
 	if (forward > 0 && shift_pressed)
 	{
@@ -52,7 +52,7 @@ void	handle_sprint(int forward, int shift_pressed, double *dx, double *dy)
 	}
 }
 
-void	move_player_if_necessary(t_player *player, bool *scene_changed, t_env *env)
+static void	move_player_if_necessary(t_player *player, bool *scene_changed, const t_env *env)
 {
 	int		forward;
 	int		sideways;

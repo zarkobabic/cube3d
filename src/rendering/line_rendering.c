@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 17:08:15 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/26 22:25:07 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	calculate_step(int starting_point, int ending_point)
 		return (-1);
 }
 
-static void	draw_line_lower_slope(t_env *env, t_point *starting,
-		t_point *ending, int color)
+static void	draw_line_lower_slope(const t_env *env, const t_point *starting,
+		const t_point *ending, int color)
 {
 	t_point	d;
 	t_point	step;
@@ -49,8 +49,8 @@ static void	draw_line_lower_slope(t_env *env, t_point *starting,
 	}
 }
 
-static void	draw_line_higher_slope(t_env *env, t_point *starting,
-		t_point *ending, int color)
+static void	draw_line_higher_slope(const t_env *env, const t_point *starting,
+		const t_point *ending, int color)
 {
 	t_point	d;
 	t_point	step;
@@ -83,7 +83,7 @@ static void	draw_line_higher_slope(t_env *env, t_point *starting,
 /// @param fir first dot coordinate
 /// @param sec second dot coordinate
 /// @param cnt counter for x and y
-void	draw_line(t_env *env, t_point *starting, t_point *ending, int color)
+void	draw_line(const t_env *env, const t_point *starting, const t_point *ending, int color)
 {
 	int	dx;
 	int	dy;

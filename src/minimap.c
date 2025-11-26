@@ -6,13 +6,13 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:48:42 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/26 22:39:22 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	has_wall_at(t_env *env, t_point *point_in_pixel)
+bool	has_wall_at(const t_env *env, const t_point *point_in_pixel)
 {
 	int	tile_size;
 
@@ -30,7 +30,7 @@ void	init_minimap(t_env *env)
 	env->map.minimap_position_y = MINIMAP_MARGIN;
 }
 
-void	draw_tile(t_env *env, int x, int y)
+void	draw_tile(const t_env *env, int x, int y)
 {
 	t_point	corner;
 
@@ -44,7 +44,7 @@ void	draw_tile(t_env *env, int x, int y)
 		draw_square(env, env->map.minimap_tile_size - 1, &corner, COLOR_EMPTY);
 }
 
-void	draw_minimap(t_env *env)
+void	draw_minimap(const t_env *env)
 {
 	int				y;
 	int				x;

@@ -6,14 +6,14 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:50:22 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/20 20:38:03 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/26 22:39:01 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 static void	find_first_horizontal_intersection(
-	t_point_double *next_intersection, double ray_angle, t_env *env,
+	t_point_double *next_intersection, double ray_angle, const t_env *env,
 		bool is_facing_down)
 {
 	t_point_double	p;
@@ -31,7 +31,7 @@ static void	find_first_horizontal_intersection(
 }
 
 static bool	check_horizontal_walls(t_point_double *horizontal_intersection,
-		double ray_angle, t_env *env, bool is_facing_down)
+		double ray_angle, const t_env *env, bool is_facing_down)
 {
 	t_point_double	next_intersection;
 	int				tile_size;
@@ -60,7 +60,7 @@ static bool	check_horizontal_walls(t_point_double *horizontal_intersection,
 }
 
 static void	find_first_vertical_intersection(t_point_double *next_intersection,
-		double ray_angle, t_env *env, bool is_facing_right)
+		double ray_angle, const t_env *env, bool is_facing_right)
 {
 	t_point_double	p;
 	int				tile_size;
@@ -77,7 +77,7 @@ static void	find_first_vertical_intersection(t_point_double *next_intersection,
 }
 
 static bool	check_vertical_walls(t_point_double *vertical_intersection,
-		double ray_angle, t_env *env, bool is_facing_right)
+		double ray_angle, const t_env *env, bool is_facing_right)
 {
 	t_point_double	next_intersection;
 	int				tile_size;
@@ -105,8 +105,8 @@ static bool	check_vertical_walls(t_point_double *vertical_intersection,
 	return (false);
 }
 
-double	get_distance_squared(t_point_double *point,
-		t_point_double *player_pos)
+double	get_distance_squared(const t_point_double *point,
+		const t_point_double *player_pos)
 {
 	double	dx;
 	double	dy;
@@ -117,8 +117,8 @@ double	get_distance_squared(t_point_double *point,
 }
 
 static void	get_closest_intersection(t_point_double *result,
-		t_point_double *horizontal, t_point_double *vertical,
-		t_point_double *player_pos)
+		const t_point_double *horizontal, const t_point_double *vertical,
+		const t_point_double *player_pos)
 {
 	double	h_dist;
 	double	v_dist;
@@ -140,14 +140,14 @@ static double	normalize_angle(double angle)
 	return (angle);
 }
 
-static void	convert_to_point(t_point *dest, t_point_double *src)
+static void	convert_to_point(t_point *dest, const t_point_double *src)
 {
 	dest->x = (int)src->x;
 	dest->y = (int)src->y;
 }
 
 static void	select_closest_wall(t_point *wall_collision_point,
-	t_point_double *intersections, bool *found, t_env *env)
+	const t_point_double *intersections, const bool *found, const t_env *env)
 {
 	t_point_double	result;
 
@@ -163,7 +163,7 @@ static void	select_closest_wall(t_point *wall_collision_point,
 		convert_to_point(wall_collision_point, &intersections[WALL_VER]);
 }
 
-void	cast_ray(double ray_angle, t_point *wall_collision_point, t_env *env)
+void	cast_ray(double ray_angle, t_point *wall_collision_point, const t_env *env)
 {
 	bool			directions[2];
 	bool			found[2];

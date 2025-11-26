@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 20:51:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/26 22:40:32 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	map_validate_player_char(char c)
 		|| c == MAP_PLAYER_EAST || c == MAP_PLAYER_WEST);
 }
 
-static int	map_validate_character_on_position(t_map *map, int i, int j)
+static int	map_validate_character_on_position(const t_map *map, int i, int j)
 {
 	if (map->matrix[i][j] != MAP_EMPTY
 		&& !map_validate_player_char(map->matrix[i][j]))
@@ -44,7 +44,7 @@ static int	map_validate_character_on_position(t_map *map, int i, int j)
 	return (true);
 }
 
-bool	map_validate_rules(t_map *map)
+bool	map_validate_rules(const t_map *map)
 {
 	int	i;
 	int	j;

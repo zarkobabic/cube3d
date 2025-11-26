@@ -6,13 +6,13 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 12:06:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/26 22:36:33 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	draw_circle_lines(t_env *env, t_point *center, t_point *iterator,
+static void	draw_circle_lines(const t_env *env, const t_point *center, const t_point *iterator,
 		int color)
 {
 	int	i;
@@ -33,7 +33,7 @@ static void	draw_circle_lines(t_env *env, t_point *center, t_point *iterator,
 	}
 }
 
-void	draw_filled_circle(t_env *env, t_point_double *center_double,
+void	draw_filled_circle(const t_env *env, const t_point_double *center_double,
 		int radius, int color)
 {
 	t_point	center;
@@ -59,7 +59,7 @@ void	draw_filled_circle(t_env *env, t_point_double *center_double,
 	}
 }
 
-void	draw_square(t_env *env, int size, t_point *left_corner,
+void	draw_square(const t_env *env, int size, const t_point *left_corner,
 		unsigned int color)
 {
 	int	x;

@@ -6,13 +6,13 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:00:26 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/20 19:07:45 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/26 22:29:30 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	render_ray_on_minimap(t_env *env, t_point *wall_collision_point)
+static void	render_ray_on_minimap(const t_env *env, const t_point *wall_collision_point)
 {
 	t_point	minimap_starting;
 	t_point	minimap_collision;
@@ -28,8 +28,8 @@ static void	render_ray_on_minimap(t_env *env, t_point *wall_collision_point)
 	draw_line(env, &minimap_starting, &minimap_collision, COLOR_PLAYER);
 }
 
-void	render_wall_projection_for_ray(t_env *env, double ray_angle,
-		t_point *wall_collision_p, int i)
+void	render_wall_projection_for_ray(const t_env *env, double ray_angle,
+		const t_point *wall_collision_p, int i)
 {
 	double			wall_distance;
 	t_point_double	wall_collision_point;
@@ -57,7 +57,7 @@ void	render_wall_projection_for_ray(t_env *env, double ray_angle,
 	draw_line(env, &wall_start, &wall_end, COLOR_PLAYER);
 }
 
-void	render_all_rays_minimap(t_env *env, int num_rays)
+void	render_all_rays_minimap(const t_env *env, int num_rays)
 {
 	double	initial_angle;
 	double	increment;
@@ -76,7 +76,7 @@ void	render_all_rays_minimap(t_env *env, int num_rays)
 	}
 }
 
-void	render_all_rays(t_env *env, int num_rays)
+void	render_all_rays(const t_env *env, int num_rays)
 {
 	double	initial_angle;
 	double	increment;

@@ -6,13 +6,13 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 00:03:10 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/26 22:55:31 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	reset_background(t_env *env)
+void	reset_background(const t_env *env)
 {
 	int	x;
 	int	y;
@@ -27,7 +27,7 @@ void	reset_background(t_env *env)
 }
 
 
-void	render_floor(t_env *env, t_point *wall_end)
+void	render_floor(const t_env *env, const t_point *wall_end)
 {
 	t_point	screen_bottom_edge;
 
@@ -36,7 +36,7 @@ void	render_floor(t_env *env, t_point *wall_end)
 	draw_line(env, wall_end, &screen_bottom_edge, env->map.floor_color);
 }
 
-void	render_ceiling(t_env *env, t_point *wall_start)
+void	render_ceiling(const t_env *env, const t_point *wall_start)
 {
 	t_point	screen_top_edge;
 
@@ -45,7 +45,7 @@ void	render_ceiling(t_env *env, t_point *wall_start)
 	draw_line(env, &screen_top_edge, wall_start, env->map.ceiling_color);
 }
 
-void	render_scene(t_env *env)
+void	render_scene(const t_env *env)
 {
 	reset_background(env);
 	render_all_rays(env, (int)(env->win_width / RES));

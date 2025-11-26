@@ -156,7 +156,7 @@ void				player_set_starting_orientation(t_player *player,
 
 // FILE_PARSING
 bool				is_whitespace(char c);
-void				file_parsing(t_env *env, char *map_file_path);
+void				file_parsing(t_env *env, const char *map_file_path);
 void				file_check_extension(t_env *env, char *map_file_path);
 // FILE_ELEMENTS_PARSING
 void				file_check_all_elements_parsed(char *line, t_env *env);
@@ -169,37 +169,37 @@ void				map_parsing(t_env *env, char *first_line);
 char				*map_pad_line_with_spaces(char *line, int target_width);
 // MAP_VALIDATION
 bool				map_validate_char(char c);
-bool				map_validate_rules(t_map *map);
+bool				map_validate_rules(const t_map *map);
 bool				map_validate_player(t_map *map);
 
 //---------------
 
 // SCENE_RENDERING
-void				reset_background(t_env *env);
-void				render_scene(t_env *env);
-void				render_ceiling(t_env *env, t_point *wall_end);
-void				render_floor(t_env *env, t_point *wall_end);
+void				reset_background(const t_env *env);
+void				render_scene(const t_env *env);
+void				render_ceiling(const t_env *env, const t_point *wall_end);
+void				render_floor(const t_env *env, const t_point *wall_end);
 
 // ELEMENTS_RENDERING
-void				draw_square(t_env *env, int size, t_point *left_corner,
+void				draw_square(const t_env *env, int size, const t_point *left_corner,
 						unsigned int color);
-void				draw_filled_circle(t_env *env, t_point_double *center,
+void				draw_filled_circle(const t_env *env, const t_point_double *center,
 						int radius, int color);
 // LINE_RENDERING
-void				draw_line(t_env *env, t_point *starting, t_point *ending,
+void				draw_line(const t_env *env, const t_point *starting, const t_point *ending,
 						int color);
 // RAY RENDERING
-void				render_all_rays(t_env *env, int num_rays);
+void				render_all_rays(const t_env *env, int num_rays);
 // RAYCASTING
 void				cast_ray(double ray_angle, t_point *wall_collision_point,
-						t_env *env);
-double				get_distance_squared(t_point_double *point,
-						t_point_double *player_pos);
+						const t_env *env);
+double				get_distance_squared(const t_point_double *point,
+						const t_point_double *player_pos);
 // MINIMAP
 void				init_minimap(t_env *env);
-void				draw_minimap(t_env *env);
-bool				has_wall_at(t_env *env, t_point *point_in_pixel);
-void				render_all_rays_minimap(t_env *env, int num_rays);
+void				draw_minimap(const t_env *env);
+bool				has_wall_at(const t_env *env, const t_point *point_in_pixel);
+void				render_all_rays_minimap(const t_env *env, int num_rays);
 // UTILITIES
 double				deg_to_rad(int degrees);
 //--------------

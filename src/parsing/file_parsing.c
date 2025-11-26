@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:32:03 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:13:54 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/26 22:41:14 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void	file_process_lines(bool *map_started, t_env *env)
 	}
 }
 
-void	file_parsing(t_env *env, char *map_file_path)
+void	file_parsing(t_env *env, const char *map_file_path)
 {
 	bool	map_started;
 
