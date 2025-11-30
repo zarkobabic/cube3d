@@ -6,7 +6,7 @@
 #    By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/27 00:34:02 by eberkau          ###   ########.fr        #
+#    Updated: 2025/11/30 18:36:24 by eberkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,12 @@ SRC_FILES = parsing/file_elements_parsing.c \
 			parsing/map_linked_list.c \
 			parsing/map_parsing.c \
 			parsing/map_validation.c \
+			parsing/texture_loading.c \
 			rendering/elements_rendering.c \
 			rendering/line_rendering.c \
 			rendering/scene_rendering.c \
 			rendering/ray_rendering.c \
+			rendering/texture_rendering.c \
 			env.c \
 			error.c \
 			game_loop.c \

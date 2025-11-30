@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:47:04 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:13:54 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/30 18:40:19 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@
 
 # define ERROR_MSG_WRONG_NUMBER_OF_PARAMETERS  \
 "Error\n Invalid number of parameters. Expected exactly 2 parameters."
+# define ERROR_MSG_WRONG_MAP_FILE_EXTENSION \
+"Error\n Invalid file extension. Expected a .cub map file."
+# define ERROR_MSG_WRONG_TEX_FILE_EXTENSION \
+"Error\n Invalid file extension. Expected a .png texture file."
+# define ERROR_MSG_MLX_INIT_FAIL \
+"Error\n MLX library initialization failed."
 # define ERROR_MSG_MLX_MEMORY_ALLOCATION_FAILED \
 "Error\n Memory allocation failure in MLX library."
 # define ERROR_MSG_MLX_WINDOW_CREATION_FAILED \
 "Error\n Window creation failed in MLX library."
-# define ERROR_MSG_WRONG_FILE_EXTENSION \
-"Error\n Invalid file extension. Expected a .cub map file."
-# define ERROR_MSG_MLX_INIT_FAIL \
-"Error\n MLX library initialization failed."
+# define ERROR_MSG_MLX_TEXTURE_LOAD_FAIL \
+"Error\n MLX texture loading failed."
 # define ERROR_MSG_UNABLE_TO_OPEN_FILE \
 "Error\n Unable to open the specified file."
 # define ERROR_MSG_NO_MAP_FOUND_IN_FILE \
@@ -81,7 +85,7 @@ typedef enum e_error_code
 	ERROR_CODE_GENERAL_ERROR,
 	ERROR_CODE_FILE_SYSTEM_ERROR,
 	ERROR_CODE_MLX_ERROR,
-	ERROR_MAP_READ_ERROR
+	ERROR_CODE_MAP_READ_ERROR
 }		t_error_code;
 
 void	error_exit(t_env *env, const char *message, t_error_code error_code);

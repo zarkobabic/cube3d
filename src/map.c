@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/21 02:46:55 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/30 18:24:09 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ void	map_destroy(t_map *map)
 		free(map->textures.we.path);
 	if (map->textures.ea.path)
 		free(map->textures.ea.path);
+	if (map->textures.no.mlx_tex)
+		mlx_delete_texture(map->textures.no.mlx_tex);
+	if (map->textures.so.mlx_tex)
+		mlx_delete_texture(map->textures.so.mlx_tex);
+	if (map->textures.we.mlx_tex)
+		mlx_delete_texture(map->textures.we.mlx_tex);
+	if (map->textures.ea.mlx_tex)
+		mlx_delete_texture(map->textures.ea.mlx_tex);
 	if (map->matrix)
 		matrix_destroy(&map->matrix, map->rows);
 }
@@ -53,9 +61,13 @@ void	map_init(t_env *env)
 
 	map = &env->map;
 	map->textures.no.path = NULL;
+	map->textures.no.mlx_tex = NULL;
 	map->textures.so.path = NULL;
+	map->textures.so.mlx_tex = NULL;
 	map->textures.we.path = NULL;
+	map->textures.we.mlx_tex = NULL;
 	map->textures.ea.path = NULL;
+	map->textures.ea.mlx_tex = NULL;
 	map->matrix = NULL;
 	map->rows = -1;
 	map->cols = -1;
