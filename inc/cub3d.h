@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/27 00:35:12 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/30 18:42:58 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,77 +137,117 @@ typedef struct s_env
 }					t_env;
 
 // MLX
-void				mlx_initialization(t_env *env);
-void				mlx_destroy(t_env *env);
+
+void	mlx_initialization(t_env *env);
+void	mlx_destroy(t_env *env);
+
 // ENV
-void				env_init(t_env *env);
-void				env_destroy(t_env *env);
+
+void	env_init(t_env *env);
+void	env_destroy(t_env *env);
+
 // MAP
-void				map_destroy(t_map *map);
-void				map_init(t_env *env);
+
+void	map_destroy(t_map *map);
+void	map_init(t_env *env);
+
 // TODO: just for testing delete after
-void				test_map_print(t_env *env);
-void				map_resize_screen(t_env *env);
+void	test_map_print(t_env *env);
+void	map_resize_screen(t_env *env);
+
 // PLAYER
-void				player_init(t_player *player);
-void				player_set_starting_orientation(t_player *player,
-						char starting_orientation);
+
+void	player_init(t_player *player);
+void	player_set_starting_orientation(t_player *player,
+			char starting_orientation);
+
 
 //----PARSING----
 
 // FILE_PARSING
-bool				is_whitespace(char c);
-void				file_parsing(t_env *env, const char *map_file_path);
-void				file_check_extension(t_env *env, char *map_file_path);
+
+bool	is_whitespace(char c);
+void	file_parsing(t_env *env, const char *map_file_path);
+void	file_check_extension(t_env *env, char *file_path, char *extension,
+			const char *err_msg);
+
 // FILE_ELEMENTS_PARSING
-void				file_check_all_elements_parsed(char *line, t_env *env);
-void				file_parse_one_element(char *line, t_env *env);
+
+void	file_check_all_elements_parsed(char *line, t_env *env);
+void	file_parse_one_element(char *line, t_env *env);
+
 // FILE_SINGLE_ELEMENT_PARSING
-void				parse_texture(char *line, char **texture, t_env *env);
-void				parse_rgb(char *line, unsigned int *color_loc_to_fill, bool *flag_to_set, t_env *env);
+
+void	parse_texture(char *line, char **texture, t_env *env);
+void	parse_rgb(char *line, unsigned int *color_loc_to_fill,
+			bool *flag_to_set, t_env *env);
+
 // MAP_PARSING
-void				map_parsing(t_env *env, char *first_line);
-char				*map_pad_line_with_spaces(char *line, int target_width);
+
+void	map_parsing(t_env *env, char *first_line);
+char	*map_pad_line_with_spaces(char *line, int target_width);
+
 // MAP_VALIDATION
-bool				map_validate_char(char c);
-bool				map_validate_rules(const t_map *map);
-bool				map_validate_player(t_map *map);
+
+bool	map_validate_char(char c);
+bool	map_validate_rules(const t_map *map);
+bool	map_validate_player(t_map *map);
+
+// TEXTURE_LOADING
+
+void	load_textures(t_env *env);
+
 
 //---------------
 
 // SCENE_RENDERING
-void				reset_background(const t_env *env);
-void				render_scene(const t_env *env);
-void				render_ceiling(const t_env *env, const t_point *wall_end);
-void				render_floor(const t_env *env, const t_point *wall_end);
+
+void	reset_background(const t_env *env);
+void	render_scene(const t_env *env);
+void	render_ceiling(const t_env *env, const t_point *wall_end);
+void	render_floor(const t_env *env, const t_point *wall_end);
 
 // ELEMENTS_RENDERING
-void				draw_square(const t_env *env, int size, const t_point *left_corner,
+
+void	draw_square(const t_env *env, int size, const t_point *left_corner,
 						unsigned int color);
-void				draw_filled_circle(const t_env *env, const t_point_double *center,
+void	draw_filled_circle(const t_env *env, const t_point_double *center,
 						int radius, int color);
 // LINE_RENDERING
-void				draw_line(const t_env *env, const t_point *starting, const t_point *ending,
-						int color);
+
+void	draw_line(const t_env *env, const t_point *starting,
+			const t_point *ending, int color);
+
 // RAY RENDERING
-void				render_all_rays(const t_env *env, int num_rays);
+
+void	render_all_rays(const t_env *env, int num_rays);
+
 // RAYCASTING
-void				cast_ray(double ray_angle, t_point *wall_collision_point,
-						const t_env *env);
-double				get_distance_squared(const t_point_double *point,
-						const t_point_double *player_pos);
+
+void	cast_ray(double ray_angle, t_point *wall_collision_point,
+			const t_env *env);
+double	get_distance_squared(const t_point_double *point,
+			const t_point_double *player_pos);
+
 // MINIMAP
-void				init_minimap(t_env *env);
-void				draw_minimap(const t_env *env);
-bool				has_wall_at(const t_env *env, const t_point *point_in_pixel);
-void				render_all_rays_minimap(const t_env *env, int num_rays);
+
+void	init_minimap(t_env *env);
+void	draw_minimap(const t_env *env);
+bool	has_wall_at(const t_env *env, const t_point *point_in_pixel);
+void	render_all_rays_minimap(const t_env *env, int num_rays);
+
 // UTILITIES
-double				deg_to_rad(int degrees);
+
+double	deg_to_rad(int degrees);
+
 //--------------
 
 // GAME_LOOP
-void				game_loop(void *param);
+
+void	game_loop(void *param);
+
 // KEY_HANDLER
-void				key_handler(mlx_key_data_t keydata, void *param);
+
+void	key_handler(mlx_key_data_t keydata, void *param);
 
 #endif
