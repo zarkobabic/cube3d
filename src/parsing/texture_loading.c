@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 17:53:14 by eberkau           #+#    #+#             */
-/*   Updated: 2025/11/30 18:40:50 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/30 18:53:06 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static void	load_single_texture(t_env *env, t_texture *texture)
 {
 	if (!env || !texture)
 		return ;
-	file_check_extension(env, texture->path, ".png", ERROR_MSG_WRONG_TEX_FILE_EXTENSION);
+	file_check_extension(env, texture->path, ".png",
+		ERROR_MSG_WRONG_TEX_FILE_EXTENSION);
 	texture->mlx_tex = mlx_load_png(texture->path);
 	if (!texture->mlx_tex)
 		error_exit(env, ERROR_MSG_MLX_TEXTURE_LOAD_FAIL, ERROR_CODE_MLX_ERROR);

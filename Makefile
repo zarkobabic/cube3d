@@ -6,14 +6,14 @@
 #    By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/30 18:36:24 by eberkau          ###   ########.fr        #
+#    Updated: 2025/11/30 22:55:38 by eberkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LFLAGS = -ldl -lglfw -pthread -lm -L"/opt/homebrew/opt/glfw/lib/" #macOS
-# LFLAGS = -L ./MLX42 -ldl -lglfw -lm -pthread -lGL #linux
+#LFLAGS = -L ./MLX42 -ldl -lglfw -lm -pthread -lGL #linux
 COMPILER_DEBUG_ENABLED = -g
 C_MAKE_DEBUG = -DDEBUG=1
 REMOVE = rm -rf
