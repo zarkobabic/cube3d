@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:32:03 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/26 22:41:14 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/30 18:41:51 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-void	file_check_extension(t_env *env, char *map_file_path)
+void	file_check_extension(t_env *env, char *file_path, char *extension,
+			const char *err_msg)
 {
 	int		has_no_extension;
-	size_t	len;
+	size_t	len_path;
+	size_t	len_extension;
 
-	len = ft_strlen(map_file_path);
-	if (len < 4)
-		error_exit(env, ERROR_MSG_WRONG_FILE_EXTENSION,
-			ERROR_CODE_FILE_SYSTEM_ERROR);
-	has_no_extension = ft_strncmp(&map_file_path[len - 4], ".cub", 5);
+	len_path = ft_strlen(file_path);
+	len_extension = ft_strlen(extension);
+	if (len_path < len_extension)
+		error_exit(env, err_msg, ERROR_CODE_FILE_SYSTEM_ERROR);
+	has_no_extension = ft_strncmp(&file_path[len_path - 4], extension, len_extension + 1);
 	if (has_no_extension)
-		error_exit(env, ERROR_MSG_WRONG_FILE_EXTENSION,
-			ERROR_CODE_FILE_SYSTEM_ERROR);
+		error_exit(env, err_msg, ERROR_CODE_FILE_SYSTEM_ERROR);
 }
 
 bool	is_whitespace(char c)
@@ -93,4 +94,5 @@ void	file_parsing(t_env *env, const char *map_file_path)
 	if (!map_started)
 		error_exit(env, ERROR_MSG_NO_MAP_FOUND_IN_FILE,
 			ERROR_CODE_FILE_SYSTEM_ERROR);
+	// load_textures(env);
 }
