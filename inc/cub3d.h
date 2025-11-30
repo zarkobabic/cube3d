@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/30 18:42:58 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/30 23:04:08 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,8 +204,8 @@ void	load_textures(t_env *env);
 
 void	reset_background(const t_env *env);
 void	render_scene(const t_env *env);
-void	render_ceiling(const t_env *env, const t_point *wall_end);
-void	render_floor(const t_env *env, const t_point *wall_end);
+void	render_ceiling(const t_env *env, t_point *wall_end);
+void	render_floor(const t_env *env, t_point *wall_end);
 
 // ELEMENTS_RENDERING
 

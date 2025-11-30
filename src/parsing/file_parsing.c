@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 11:32:03 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/30 18:41:51 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/30 22:52:32 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,5 @@ void	file_parsing(t_env *env, const char *map_file_path)
 	if (!map_started)
 		error_exit(env, ERROR_MSG_NO_MAP_FOUND_IN_FILE,
 			ERROR_CODE_FILE_SYSTEM_ERROR);
-	// load_textures(env);
+	load_textures(env);
 }

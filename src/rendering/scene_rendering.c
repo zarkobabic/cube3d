@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 00:03:10 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/26 22:55:31 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/11/30 23:03:49 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,23 @@ void	reset_background(const t_env *env)
 }
 
 
-void	render_floor(const t_env *env, const t_point *wall_end)
+void	render_floor(const t_env *env, t_point *wall_end)
 {
 	t_point	screen_bottom_edge;
 
+	if (wall_end->y >= env->win_height)
+		wall_end->y = env->win_height - 1;
 	screen_bottom_edge.y = env->win_height;
 	screen_bottom_edge.x = wall_end->x;
 	draw_line(env, wall_end, &screen_bottom_edge, env->map.floor_color);
 }
 
-void	render_ceiling(const t_env *env, const t_point *wall_start)
+void	render_ceiling(const t_env *env, t_point *wall_start)
 {
 	t_point	screen_top_edge;
 
+	if (wall_start->y < 0) // TODO: move into following subfunctions
+		wall_start->y = 0;
 	screen_top_edge.y = 0;
 	screen_top_edge.x = wall_start->x;
 	draw_line(env, &screen_top_edge, wall_start, env->map.ceiling_color);
