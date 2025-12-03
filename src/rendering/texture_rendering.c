@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 23:27:26 by eberkau           #+#    #+#             */
-/*   Updated: 2025/11/30 23:46:34 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/03 00:44:28 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,112 +32,67 @@ uint32_t	get_pixel_from_texture(const mlx_texture_t *tex, unsigned int x, unsign
 	return (pixel_value);
 }
 
-void hori_walls(const t_env *env, const t_point *wall_collision_p, mlx_texture_t *texture, t_point *wall_start, t_point *wall_end, double projected_wall_height)
+static void	draw_wall_column(const t_env *env, t_tex_draw *draw)
 {
-	unsigned int	tex_x;
-	unsigned int	tex_y_min;
-	unsigned int	tex_y_max;
+	double			tex_y;
 	double			tex_y_step;
+	int				y;
 
-	tex_x = (wall_collision_p->x - env->map.tile_size) % texture->width;
-
-	tex_y_min = 0;
-	tex_y_max = texture->height - 1;
-
-	tex_y_step = (double)texture->height / projected_wall_height;
-
-
-	double real_wall_top;
+	tex_y_step = (double)draw->texture->height / draw->proj_height;
+	tex_y = 0;
+	if (draw->start_y < 0)
 	{
-		real_wall_top = env->win_height / 2.0 - projected_wall_height / 2.0;
-		
-		if (wall_start->y < 0)
-		{
-			tex_y_min = (-real_wall_top / projected_wall_height)
-			* texture->height;
-			wall_start->y = 0;
-		}
-	} // FIXME: ChatGPT suggestion but doesn't fix destortion when close to wall
-
-
-	// if (wall_start->y < 0)
-	// {
-	// 	tex_y_min -= wall_start->y * tex_y_step;
-	// 	wall_start->y = 0;
-	// }
-	if (wall_end->y >= env->win_height) // FIXME: should be the same as previous 'if', as value and as calculation (symmetric on horizon) -> combine for fewer function args
-	{
-		// tex_y_max -= (wall_end->y - env->win_height) * tex_y_step;
-		wall_end->y = env->win_height;
+		tex_y = -draw->start_y * tex_y_step;
+		draw->start_y = 0;
 	}
-
-	double i = tex_y_min;
-	int line_y = wall_start->y;
-
-	while (i <= tex_y_max && line_y >= 0 && line_y < env->win_height)
+	if (draw->end_y >= env->win_height)
+		draw->end_y = env->win_height - 1;
+	y = draw->start_y;
+	while (y <= draw->end_y)
 	{
-		mlx_put_pixel(env->img, wall_start->x, line_y, get_pixel_from_texture(texture, tex_x, (unsigned int)i));
-		i += tex_y_step;
-		line_y += 1;
+		mlx_put_pixel(env->img, draw->x, y,
+			get_pixel_from_texture(draw->texture, draw->tex_x, (unsigned int)tex_y));
+		tex_y += tex_y_step;
+		++y;
 	}
 }
 
-void verti_walls(const t_env *env, const t_point *wall_collision_p, mlx_texture_t *texture, t_point *wall_start, t_point *wall_end, double projected_wall_height)
+static mlx_texture_t	*select_texture(const t_env *env, int wall_dir)
 {
-	unsigned int	tex_x;
-	unsigned int	tex_y_min;
-	unsigned int	tex_y_max;
-	double			tex_y_step;
-
-	tex_x = (wall_collision_p->y - env->map.tile_size) % texture->width;
-
-	tex_y_min = 0;
-	tex_y_max = texture->height - 1;
-
-	tex_y_step = (double)texture->height / projected_wall_height;
-
-	double real_wall_top;
-	{
-		real_wall_top = env->win_height / 2.0 - projected_wall_height / 2.0;
-		
-		if (wall_start->y < 0)
-		{
-			tex_y_min = (-real_wall_top / projected_wall_height)
-			* texture->height;
-			wall_start->y = 0;
-		}
-	} // FIXME: ChatGPT suggestion but doesn't fix destortion when close to wall
-
-
-	// if (wall_start->y < 0)
-	// {
-	// 	tex_y_min -= wall_start->y * tex_y_step;
-	// 	wall_start->y = 0;
-	// }
-	if (wall_end->y >= env->win_height) // FIXME: should be the same as previous 'if', as value and as calculation (symmetric on horizon) -> combine for fewer function args
-	{
-		// tex_y_max -= (wall_end->y - env->win_height) * tex_y_step;
-		wall_end->y = env->win_height;
-	}
-
-	double i = tex_y_min;
-	int line_y = wall_start->y;
-
-	while (i <= tex_y_max && line_y >= 0 && line_y < env->win_height)
-	{
-		mlx_put_pixel(env->img, wall_start->x, line_y, get_pixel_from_texture(texture, tex_x, (unsigned int)i));
-		i += tex_y_step;
-		line_y += 1;
-	}
-}
-
-void paint_textures(const t_env *env, const t_point *wall_collision_p, t_point *wall_start, t_point *wall_end, double projected_wall_height)
-{
-	if (env->map.matrix[wall_collision_p->y / env->map.tile_size][wall_collision_p->x / env->map.tile_size - 1] == MAP_WALL
-			&& env->map.matrix[wall_collision_p->y / env->map.tile_size][wall_collision_p->x / env->map.tile_size + 1] == MAP_WALL) // FIXME: condition not right
-		hori_walls(env, wall_collision_p, env->map.textures.no.mlx_tex, wall_start, wall_end, projected_wall_height);
+	if (wall_dir == WALL_NORTH)
+		return (env->map.textures.no.mlx_tex);
+	else if (wall_dir == WALL_SOUTH)
+		return (env->map.textures.so.mlx_tex);
+	else if (wall_dir == WALL_EAST)
+		return (env->map.textures.ea.mlx_tex);
 	else
-		verti_walls(env, wall_collision_p, env->map.textures.we.mlx_tex, wall_start, wall_end, projected_wall_height);
+		return (env->map.textures.we.mlx_tex);
 }
-// BUG: fisheye effect still somewhat present, evaluate
-// FIXME: mirrored texture on oppposite walls
+
+static void	setup_tex_draw(t_tex_draw *draw, const t_point *wall_pos,
+				const t_point *wall_start, const t_point *wall_end)
+{
+	draw->x = wall_start->x;
+	draw->start_y = wall_start->y;
+	draw->end_y = wall_end->y;
+	if (draw->wall_dir == WALL_NORTH)
+		draw->tex_x = (unsigned int)(wall_pos->x - draw->tile_size) % draw->texture->width;
+	else if (draw->wall_dir == WALL_SOUTH)
+		draw->tex_x = draw->texture->width - 1 - (unsigned int)(wall_pos->x - draw->tile_size) % draw->texture->width;
+	else if (draw->wall_dir == WALL_EAST)
+		draw->tex_x = (unsigned int)(wall_pos->y - draw->tile_size) % draw->texture->width;
+	else
+		draw->tex_x = draw->texture->width - 1 - (unsigned int)(wall_pos->y - draw->tile_size) % draw->texture->width;
+}
+
+void	draw_texture(const t_env *env, const t_ray_tex_data *data)
+{
+	t_tex_draw	draw;
+
+	draw.wall_dir = data->wall_dir;
+	draw.texture = select_texture(env, data->wall_dir);
+	draw.proj_height = data->proj_height;
+	draw.tile_size = data->tile_size;
+	setup_tex_draw(&draw, data->wall_pos, data->wall_start, data->wall_end);
+	draw_wall_column(env, &draw);
+}

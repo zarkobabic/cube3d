@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/30 23:04:08 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/03 01:17:21 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@
 # define ORIENT_EAST 1
 # define WALL_HOR 0
 # define WALL_VER 1
+# define WALL_NORTH 0
+# define WALL_SOUTH 1
+# define WALL_EAST 2
+# define WALL_WEST 3
 
 typedef struct s_point
 {
@@ -72,11 +76,44 @@ typedef struct s_point_double
 	double			y;
 }					t_point_double;
 
+typedef struct s_tex_draw
+{
+	int				x;
+	int				start_y;
+	int				end_y;
+	unsigned int	tex_x;
+	int				wall_dir;
+	mlx_texture_t	*texture;
+	double			proj_height;
+	int 			tile_size;
+}					t_tex_draw;
+
+typedef struct s_ray_tex_data
+{
+	const t_point	*wall_pos;
+	const t_point	*wall_start;
+	const t_point	*wall_end;
+	double			proj_height;
+	int				wall_dir;
+	int				tile_size;
+}					t_ray_tex_data;
+
+typedef struct s_ray_hit
+{
+	t_point_double	intersections[2];
+	bool			found[2];
+}					t_ray_hit;
+
+typedef struct s_ray_render_params
+{
+	double			ray_angle;
+	int				column;
+	int				wall_dir;
+}					t_ray_render_params;
+
 typedef struct s_texture
 {
 	char			*path;
-	// unsigned int	height; // TODO: delete probably
-	// unsigned int	width;
 	mlx_texture_t	*mlx_tex;
 }					t_texture;
 
@@ -222,9 +259,13 @@ void	draw_line(const t_env *env, const t_point *starting,
 
 void	render_all_rays(const t_env *env, int num_rays);
 
+// TEXTURE_RENDERING
+
+void	draw_texture(const t_env *env, const t_ray_tex_data *data);
+
 // RAYCASTING
 
-void	cast_ray(double ray_angle, t_point *wall_collision_point,
+int		cast_ray(double ray_angle, t_point *wall_collision_point,
 			const t_env *env);
 double	get_distance_squared(const t_point_double *point,
 			const t_point_double *player_pos);

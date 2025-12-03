@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:50:22 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/26 22:39:01 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/03 01:18:29 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,21 +116,6 @@ double	get_distance_squared(const t_point_double *point,
 	return (dx * dx + dy * dy);
 }
 
-static void	get_closest_intersection(t_point_double *result,
-		const t_point_double *horizontal, const t_point_double *vertical,
-		const t_point_double *player_pos)
-{
-	double	h_dist;
-	double	v_dist;
-
-	h_dist = get_distance_squared(horizontal, player_pos);
-	v_dist = get_distance_squared(vertical, player_pos);
-	if (h_dist < v_dist)
-		*result = *horizontal;
-	else
-		*result = *vertical;
-}
-
 static double	normalize_angle(double angle)
 {
 	while (angle < 0)
@@ -146,35 +131,63 @@ static void	convert_to_point(t_point *dest, const t_point_double *src)
 	dest->y = (int)src->y;
 }
 
-static void	select_closest_wall(t_point *wall_collision_point,
-	const t_point_double *intersections, const bool *found, const t_env *env)
+static int	get_wall_direction(double ray_angle, bool is_horizontal)
 {
-	t_point_double	result;
-
-	if (found[WALL_HOR] && found[WALL_VER])
+	if (is_horizontal)
 	{
-		get_closest_intersection(&result, &intersections[WALL_HOR],
-			&intersections[WALL_VER], &env->map.player.pos);
-		convert_to_point(wall_collision_point, &result);
+		if (ray_angle > 0 && ray_angle < M_PI)
+			return (WALL_SOUTH);
+		else
+			return (WALL_NORTH);
 	}
-	else if (found[WALL_HOR])
-		convert_to_point(wall_collision_point, &intersections[WALL_HOR]);
-	else if (found[WALL_VER])
-		convert_to_point(wall_collision_point, &intersections[WALL_VER]);
+	else
+	{
+		if (ray_angle < M_PI / 2 || ray_angle > 3 * M_PI / 2)
+			return (WALL_EAST);
+		else
+			return (WALL_WEST);
+	}
 }
 
-void	cast_ray(double ray_angle, t_point *wall_collision_point, const t_env *env)
+static int	select_closest_wall(t_point *wall_collision_point,
+	t_ray_hit *hit, const t_env *env, double ray_angle)
+{
+	double			h_dist;
+	double			v_dist;
+
+	if (hit->found[WALL_HOR] && hit->found[WALL_VER])
+	{
+		h_dist = get_distance_squared(&hit->intersections[WALL_HOR],
+				&env->map.player.pos);
+		v_dist = get_distance_squared(&hit->intersections[WALL_VER],
+				&env->map.player.pos);
+		if (h_dist < v_dist)
+			return (convert_to_point(wall_collision_point, &hit->intersections[WALL_HOR]),
+				get_wall_direction(ray_angle, true));
+		else
+			return (convert_to_point(wall_collision_point, &hit->intersections[WALL_VER]),
+				get_wall_direction(ray_angle, false));
+	}
+	else if (hit->found[WALL_HOR])
+		return (convert_to_point(wall_collision_point, &hit->intersections[WALL_HOR]),
+			get_wall_direction(ray_angle, true));
+	else if (hit->found[WALL_VER])
+		return (convert_to_point(wall_collision_point, &hit->intersections[WALL_VER]),
+			get_wall_direction(ray_angle, false));
+	return (-1);
+}
+
+int	cast_ray(double ray_angle, t_point *wall_collision_point, const t_env *env)
 {
 	bool			directions[2];
-	bool			found[2];
-	t_point_double	intersections[2];
+	t_ray_hit		hit;
 
 	ray_angle = normalize_angle(ray_angle);
 	directions[ORIENT_SOUTH] = (ray_angle > 0 && ray_angle < M_PI);
 	directions[ORIENT_EAST] = (ray_angle < M_PI / 2 || ray_angle > 3 * M_PI / 2);
-	found[WALL_HOR] = check_horizontal_walls(&intersections[WALL_HOR],
+	hit.found[WALL_HOR] = check_horizontal_walls(&hit.intersections[WALL_HOR],
 			ray_angle, env, directions[ORIENT_SOUTH]);
-	found[WALL_VER] = check_vertical_walls(&intersections[WALL_VER],
+	hit.found[WALL_VER] = check_vertical_walls(&hit.intersections[WALL_VER],
 			ray_angle, env, directions[ORIENT_EAST]);
-	select_closest_wall(wall_collision_point, intersections, found, env);
+	return (select_closest_wall(wall_collision_point, &hit, env, ray_angle));
 }
