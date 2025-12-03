@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 00:03:10 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/30 23:03:49 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/03 00:50:32 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	render_ceiling(const t_env *env, t_point *wall_start)
 {
 	t_point	screen_top_edge;
 
-	if (wall_start->y < 0) // TODO: move into following subfunctions
+	if (wall_start->y < 0)
 		wall_start->y = 0;
 	screen_top_edge.y = 0;
 	screen_top_edge.x = wall_start->x;
