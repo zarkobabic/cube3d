@@ -6,13 +6,14 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 23:27:26 by eberkau           #+#    #+#             */
-/*   Updated: 2025/12/03 00:44:28 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/03 19:45:46 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-uint32_t	get_pixel_from_texture(const mlx_texture_t *tex, unsigned int x, unsigned int y)
+uint32_t	get_pixel_from_texture(const mlx_texture_t *tex, unsigned int x,
+	unsigned int y)
 {
 	uint32_t		pixel_value;
 	unsigned int	pix_pos;
@@ -51,7 +52,8 @@ static void	draw_wall_column(const t_env *env, t_tex_draw *draw)
 	while (y <= draw->end_y)
 	{
 		mlx_put_pixel(env->img, draw->x, y,
-			get_pixel_from_texture(draw->texture, draw->tex_x, (unsigned int)tex_y));
+			get_pixel_from_texture(draw->texture, draw->tex_x,
+				(unsigned int)tex_y));
 		tex_y += tex_y_step;
 		++y;
 	}
@@ -72,17 +74,22 @@ static mlx_texture_t	*select_texture(const t_env *env, int wall_dir)
 static void	setup_tex_draw(t_tex_draw *draw, const t_point *wall_pos,
 				const t_point *wall_start, const t_point *wall_end)
 {
+	double	wall_hit_offset;
+	double	wall_frac;
+
 	draw->x = wall_start->x;
 	draw->start_y = wall_start->y;
 	draw->end_y = wall_end->y;
-	if (draw->wall_dir == WALL_NORTH)
-		draw->tex_x = (unsigned int)(wall_pos->x - draw->tile_size) % draw->texture->width;
-	else if (draw->wall_dir == WALL_SOUTH)
-		draw->tex_x = draw->texture->width - 1 - (unsigned int)(wall_pos->x - draw->tile_size) % draw->texture->width;
-	else if (draw->wall_dir == WALL_EAST)
-		draw->tex_x = (unsigned int)(wall_pos->y - draw->tile_size) % draw->texture->width;
+	if (draw->wall_dir == WALL_NORTH || draw->wall_dir == WALL_SOUTH)
+		wall_hit_offset = (double)(wall_pos->x % draw->tile_size);
 	else
-		draw->tex_x = draw->texture->width - 1 - (unsigned int)(wall_pos->y - draw->tile_size) % draw->texture->width;
+		wall_hit_offset = (double)(wall_pos->y % draw->tile_size);
+	if (draw->wall_dir == WALL_SOUTH || draw->wall_dir == WALL_WEST)
+		wall_hit_offset = (double)(draw->tile_size - wall_hit_offset);
+	wall_frac = wall_hit_offset / draw->tile_size;
+	draw->tex_x = (unsigned int)(wall_frac * draw->texture->width);
+	if (draw->tex_x >= draw->texture->width)
+		draw->tex_x = draw->texture->width - 1;
 }
 
 void	draw_texture(const t_env *env, const t_ray_tex_data *data)

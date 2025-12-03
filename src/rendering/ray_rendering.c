@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:00:26 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/03 01:19:16 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/03 19:47:58 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	render_wall_projection_for_ray(const t_env *env,
 	t_point				wall_start;
 	t_point				wall_end;
 	t_ray_tex_data		tex_data;
-	t_point_double		temp;
+	t_point_double		temp_double;
 
-	temp.x = wall_collision_p->x;
-	temp.y = wall_collision_p->y;
-	projected_wall_height = (env->map.tile_size / (sqrt(get_distance_squared(&temp,
-				&env->map.player.pos))
-			* cos(params->ray_angle - env->map.player.rot_angle)))
+	temp_double.x = wall_collision_p->x;
+	temp_double.y = wall_collision_p->y;
+	projected_wall_height = (env->map.tile_size /
+				(sqrt(get_distance_squared(&temp_double, &env->map.player.pos))
+					* cos(params->ray_angle - env->map.player.rot_angle)))
 			* env->win_width / (2 * tan(env->map.player.fov_rad / 2));
 	wall_start.y = (int)(env->win_height / 2 - projected_wall_height / 2);
 	wall_start.x = params->column;

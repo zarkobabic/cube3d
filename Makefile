@@ -6,7 +6,7 @@
 #    By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/11/30 22:55:38 by eberkau          ###   ########.fr        #
+#    Updated: 2025/12/03 19:50:02 by eberkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,8 +54,6 @@ SRC_FILES = parsing/file_elements_parsing.c \
 			player.c \
 			raycasting.c \
 			utilities.c \
-#			test.c
-#TODO: delete test.c
 
 OBJ_FILES = $(addprefix $(OBJ_FOLDER)/, $(SRC_FILES:.c=.o))
 
