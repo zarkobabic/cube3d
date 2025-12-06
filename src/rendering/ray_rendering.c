@@ -6,14 +6,14 @@
 /*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:00:26 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/06 16:01:31 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/12/06 16:10:02 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 static void	render_ray_on_minimap(const t_env *env,
-	const t_point *wall_collision_point)
+		const t_point *wall_collision_point)
 {
 	t_point	minimap_starting;
 	t_point	minimap_collision;
@@ -34,11 +34,11 @@ static void	render_ray_on_minimap(const t_env *env,
 void	render_wall_projection_for_ray(const t_env *env,
 		const t_point *wall_collision_p, const t_ray_render_params *params)
 {
-	double				projected_wall_height;
-	t_point				wall_start;
-	t_point				wall_end;
-	t_ray_tex_data		tex_data;
-	t_point_double		temp_double;
+	double			projected_wall_height;
+	t_point			wall_start;
+	t_point			wall_end;
+	t_ray_tex_data	tex_data;
+	t_point_double	temp_double;
 
 	temp_double.x = wall_collision_p->x;
 	temp_double.y = wall_collision_p->y;
@@ -60,8 +60,10 @@ void	render_wall_projection_for_ray(const t_env *env,
 	render_floor(env, &wall_end);
 	render_ceiling(env, &wall_start);
 }
-// draw_line(env, &wall_start, &wall_end, COLOR_PLAYER); TODO: comment or delete?
-// -> For drawing a colored wall without texture -> switch with draw_texture(); TODO: comment or delete?
+// draw_line(env, &wall_start, &wall_end,
+// COLOR_PLAYER); TODO: comment or delete?
+// -> For drawing a colored wall without texture
+// -> switch with draw_texture(); TODO: comment or delete?
 
 void	render_all_rays_minimap(const t_env *env, int num_rays)
 {
