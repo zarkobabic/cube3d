@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:15:43 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/30 18:45:43 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 15:58:18 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	main(int argc, char **argv)
 	file_check_extension(&env, argv[MAP_FILE_PATH_INDEX], ".cub",
 		ERROR_MSG_WRONG_MAP_FILE_EXTENSION);
 	file_parsing(&env, argv[MAP_FILE_PATH_INDEX]);
-	test_map_print(&env);
 	map_resize_screen(&env);
 	init_minimap(&env);
 	mlx_initialization(&env);

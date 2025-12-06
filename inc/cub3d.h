@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/06 04:51:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 16:02:59 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,16 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define WINDOW_WIDTH 1280
-# define WINDOW_HEIGHT 720
+# define WINDOW_WIDTH 4000
+# define WINDOW_HEIGHT 4000
 # define TILE_SIZE 30
 # define FOV 60
 # define PLAYER_RADIUS 2
-# define ROTATION_SPEED 0.05
+# define ROTATION_SPEED 1.2
 # define MOVE_SPEED 3
 # define RES 1
 # define WALL_HEIGHT 100
-# define MINIMAP_RATIO 0.3
+# define MINIMAP_RATIO 0.4
 # define MINIMAP_MARGIN 5
 
 # define MAP_EMPTY '0'
@@ -187,9 +187,6 @@ void	env_destroy(t_env *env);
 
 void	map_destroy(t_map *map);
 void	map_init(t_env *env);
-
-// TODO: just for testing delete after
-void	test_map_print(t_env *env);
 void	map_resize_screen(t_env *env);
 
 // PLAYER

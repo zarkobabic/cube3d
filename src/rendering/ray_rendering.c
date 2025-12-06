@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_rendering.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:00:26 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/06 04:38:58 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 16:01:31 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void	render_wall_projection_for_ray(const t_env *env,
 	render_floor(env, &wall_end);
 	render_ceiling(env, &wall_start);
 }
-// draw_line(env, &wall_start, &wall_end, COLOR_PLAYER);
-// -> For drawing a colored wall without texture -> switch with draw_texture()
+// draw_line(env, &wall_start, &wall_end, COLOR_PLAYER); TODO: comment or delete?
+// -> For drawing a colored wall without texture -> switch with draw_texture(); TODO: comment or delete?
 
 void	render_all_rays_minimap(const t_env *env, int num_rays)
 {
@@ -98,7 +98,6 @@ void	render_all_rays(const t_env *env, int num_rays)
 		params.ray_angle = initial_angle;
 		params.column = i;
 		params.wall_dir = cast_ray(initial_angle, &wall_collision_point, env);
-		// render_ray_on_minimap(env, &wall_collision_point); // TODO: delete or uncomment?
 		render_wall_projection_for_ray(env, &wall_collision_point, &params);
 		initial_angle += increment;
 		++i;

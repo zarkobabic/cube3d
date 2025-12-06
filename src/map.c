@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/06 05:01:52 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 15:58:24 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,43 +80,36 @@ void	map_init(t_env *env)
 	player_init(&map->player);
 }
 
+/// @brief Queries the primary monitor's screen dimensions.
+/// MLX42's mlx_get_monitor_size() requires an initialized MLX context,
+/// but there's no way to initialize without creating a window. As a workaround,
+/// we use MLX_HEADLESS mode to create an invisible instance, fetch the
+/// resolution, and immediately terminate it.
+/// @param env
 void	map_resize_screen(t_env *env)
 {
 	t_player	*player;
+	int			screen_w;
+	int			screen_h;
+	mlx_t		*dummy_mlx;
 
 	player = &env->map.player;
+	mlx_set_setting(MLX_HEADLESS, true);
+	dummy_mlx = mlx_init(1, 1, "Dummy", false);
+	if (dummy_mlx)
+	{
+		mlx_get_monitor_size(0, &screen_w, &screen_h);
+		if (env->win_width > screen_w)
+			env->win_width = screen_w;
+		if (env->win_height > screen_h)
+			env->win_height = screen_h;
+		mlx_terminate(dummy_mlx);
+	}
+	else
+		error_exit(env, ERROR_MSG_MLX_INIT_FAIL, ERROR_CODE_MLX_ERROR);
+	mlx_set_setting(MLX_HEADLESS, false);
 	env->map.tile_size = (int)fmin(env->win_height / env->map.rows,
 			env->win_width / env->map.cols);
 	player->pos.y = (int)((player->pos.y + 0.5) * env->map.tile_size);
 	player->pos.x = (int)((player->pos.x + 0.5) * env->map.tile_size);
-	player->move_speed = player->move_speed * env->map.tile_size / TILE_SIZE;
-}
-
-// TODO: just for testing delete after
-void	test_map_print(t_env *env)
-{
-	int	i;
-	int	j;
-
-	printf("MAP INFO \n");
-	printf("map_file_fd: %d|\n", env->map.map_file_fd);
-	printf("rows: %d|\n", env->map.rows);
-	printf("cols: %d|\n", env->map.cols);
-	// printf("tile_size: %d|\n", env->map.tile_size); // TODO: delete or uncomment?
-	printf("no_texture: %s|\n", env->map.textures.no.path);
-	printf("so_texture: %s|\n", env->map.textures.so.path);
-	printf("we_texture: %s|\n", env->map.textures.we.path);
-	printf("ea_texture: %s|\n", env->map.textures.ea.path);
-	printf("floor_color: %d|\n", env->map.floor_color);
-	printf("ceiling_color: %d|\n", env->map.ceiling_color);
-	i = 0;
-	while (i < env->map.rows)
-	{
-		j = 0;
-		printf("|");
-		while (j < env->map.cols)
-			printf("%c", env->map.matrix[i][j++]);
-		printf("|\n");
-		++i;
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_single_element_parsing.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:20:29 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 15:59:31 by zbabic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	parse_rgb(char *line, unsigned int *color_loc_to_fill,
 	return (*flag_to_set = true, free_split(&split));
 }
 
-//TODO: Maybe needs check if its readable texture file with open and O_READ
 void	parse_texture(char *line, char **texture, t_env *env)
 {
 	int		i;
