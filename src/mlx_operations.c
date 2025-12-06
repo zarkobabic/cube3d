@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:15 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/19 18:12:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 05:27:13 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	mlx_initialization(t_env *env)
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 
-	mlx = mlx_init(env->win_width, env->win_height, "Cube3D", true);
+	mlx = mlx_init(env->win_width, env->win_height, "Cub3D", true);
 	if (!mlx)
 		error_exit(env, ERROR_MSG_MLX_INIT_FAIL, ERROR_CODE_MLX_ERROR);
 	img = mlx_new_image(mlx, env->win_width, env->win_height);
