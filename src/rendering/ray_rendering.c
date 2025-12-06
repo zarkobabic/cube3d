@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_rendering.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:00:26 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/06 16:10:02 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/12/07 00:55:43 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,8 @@ void	render_wall_projection_for_ray(const t_env *env,
 	render_floor(env, &wall_end);
 	render_ceiling(env, &wall_start);
 }
-// draw_line(env, &wall_start, &wall_end,
-// COLOR_PLAYER); TODO: comment or delete?
-// -> For drawing a colored wall without texture
-// -> switch with draw_texture(); TODO: comment or delete?
+// draw_line(env, &wall_start, &wall_end, COLOR_PLAYER);
+// -> For drawing a wall without texture -> switch with 'draw_texture()' above
 
 void	render_all_rays_minimap(const t_env *env, int num_rays)
 {

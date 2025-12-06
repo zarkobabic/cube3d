@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zbabic <zbabic@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/13 23:46:09 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/06 15:38:13 by zbabic           ###   ########.fr       */
+/*   Updated: 2025/12/07 00:49:53 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ static void	handle_collisions(const t_env *env, double *dx, double *dy)
 	player = (t_player *)&env->map.player;
 	map = env->map.matrix;
 	tile_size = env->map.tile_size;
-	if (map[(int)(player->pos.y / tile_size)][(int)((player->pos.x + *dx)
-			/ tile_size)] == MAP_WALL)
+	if (map[(int)(player->pos.y / tile_size)]
+			[(int)((player->pos.x + *dx) / tile_size)] == MAP_WALL)
 		*dx = 0;
-	if (map[(int)((player->pos.y + *dy) / tile_size)][(int)(player->pos.x
-			/ tile_size)] == MAP_WALL)
+	if (map[(int)((player->pos.y + *dy) / tile_size)]
+			[(int)(player->pos.x / tile_size)] == MAP_WALL)
 		*dy = 0;
 }
 
