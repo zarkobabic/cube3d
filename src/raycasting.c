@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:50:22 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/03 01:18:29 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 01:34:07 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ static bool	check_horizontal_walls(t_point_double *horizontal_intersection,
 	else
 		offset.y = -tile_size;
 	offset.x = offset.y / tan(ray_angle);
-	while (next_intersection.x < env->win_width && next_intersection.x >= 0
-		&& next_intersection.y < env->win_height && next_intersection.y >= 0)
+	while (next_intersection.x < tile_size * env->map.cols
+		&& next_intersection.y < tile_size * env->map.rows
+		&& next_intersection.x >= 0 && next_intersection.y >= 0)
 	{
 		check_point.x = (int)next_intersection.x;
 		check_point.y = (int)next_intersection.y;
@@ -92,8 +93,9 @@ static bool	check_vertical_walls(t_point_double *vertical_intersection,
 	else
 		offset.x = -tile_size;
 	offset.y = offset.x * tan(ray_angle);
-	while (next_intersection.x < env->win_width && next_intersection.x >= 0
-		&& next_intersection.y < env->win_height && next_intersection.y >= 0)
+	while (next_intersection.x < tile_size * env->map.cols
+		&& next_intersection.y < tile_size * env->map.rows
+		&& next_intersection.x >= 0 && next_intersection.y >= 0)
 	{
 		check_point.x = (int)next_intersection.x;
 		check_point.y = (int)next_intersection.y;

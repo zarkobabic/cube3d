@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/30 18:24:09 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 01:39:18 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,9 @@ void	map_resize_screen(t_env *env)
 	player = &env->map.player;
 	env->map.tile_size = (int)fmin(env->win_height / env->map.rows,
 			env->win_width / env->map.cols);
-	env->win_width = env->map.tile_size * env->map.cols;
-	env->win_height = env->map.tile_size * env->map.rows;
 	player->pos.y = (int)((player->pos.y + 0.5) * env->map.tile_size);
 	player->pos.x = (int)((player->pos.x + 0.5) * env->map.tile_size);
+	player->move_speed = player->move_speed * env->map.tile_size / TILE_SIZE;
 }
 
 void	test_map_print(t_env *env)
