@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/03 01:17:21 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:00:02 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-# define WINDOW_WIDTH 2200
-# define WINDOW_HEIGHT 1100
+# define WINDOW_WIDTH 1280
+# define WINDOW_HEIGHT 720
 # define TILE_SIZE 30
 # define FOV 60
 # define PLAYER_RADIUS 2
@@ -29,8 +29,8 @@
 # define MOVE_SPEED 3
 # define RES 1
 # define WALL_HEIGHT 100
-# define MINIMAP_RATIO 0.2
-# define MINIMAP_MARGIN 10
+# define MINIMAP_RATIO 0.3
+# define MINIMAP_MARGIN 5
 
 # define MAP_EMPTY '0'
 # define MAP_WALL '1'

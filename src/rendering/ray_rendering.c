@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 23:00:26 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/03 19:47:58 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:00:57 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,17 @@ static void	render_ray_on_minimap(const t_env *env, const t_point *wall_collisio
 {
 	t_point	minimap_starting;
 	t_point	minimap_collision;
+	double	scale;
 
-	minimap_starting.x = env->map.minimap_position_x + (env->map.player.pos.x
-			* MINIMAP_RATIO);
-	minimap_starting.y = env->map.minimap_position_y + (env->map.player.pos.y
-			* MINIMAP_RATIO);
-	minimap_collision.x = env->map.minimap_position_x + (wall_collision_point->x
-			* MINIMAP_RATIO);
-	minimap_collision.y = env->map.minimap_position_y + (wall_collision_point->y
-			* MINIMAP_RATIO);
+	scale = (double)env->map.minimap_tile_size / env->map.tile_size;
+	minimap_starting.x = env->map.minimap_position_x
+		+ (int)(env->map.player.pos.x * scale);
+	minimap_starting.y = env->map.minimap_position_y
+		+ (int)(env->map.player.pos.y * scale);
+	minimap_collision.x = env->map.minimap_position_x
+		+ (int)(wall_collision_point->x * scale);
+	minimap_collision.y = env->map.minimap_position_y
+		+ (int)(wall_collision_point->y * scale);
 	draw_line(env, &minimap_starting, &minimap_collision, COLOR_PLAYER);
 }
 

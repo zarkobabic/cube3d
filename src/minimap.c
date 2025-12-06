@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:48:42 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/26 22:39:22 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:05:16 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ bool	has_wall_at(const t_env *env, const t_point *point_in_pixel)
 
 void	init_minimap(t_env *env)
 {
-	env->map.minimap_tile_size = env->map.tile_size * MINIMAP_RATIO;
+	env->map.minimap_tile_size = (int)fmin(
+		env->win_height * MINIMAP_RATIO / env->map.rows,
+		env->win_width * MINIMAP_RATIO / env->map.cols);
 	env->map.minimap_position_x = env->win_width - (env->map.cols
 			* env->map.minimap_tile_size) - MINIMAP_MARGIN;
 	env->map.minimap_position_y = MINIMAP_MARGIN;
@@ -61,10 +63,12 @@ void	draw_minimap(const t_env *env)
 		}
 		++y;
 	}
-	minimap_player_pos.x = env->map.minimap_position_x + (env->map.player.pos.x
-			* MINIMAP_RATIO);
-	minimap_player_pos.y = env->map.minimap_position_y + (env->map.player.pos.y
-			* MINIMAP_RATIO);
+	minimap_player_pos.x = env->map.minimap_position_x
+		+ (env->map.player.pos.x * env->map.minimap_tile_size
+			/ env->map.tile_size);
+	minimap_player_pos.y = env->map.minimap_position_y
+		+ (env->map.player.pos.y * env->map.minimap_tile_size
+			/ env->map.tile_size);
 	draw_filled_circle(env, &minimap_player_pos, PLAYER_RADIUS, COLOR_PLAYER);
 	render_all_rays_minimap(env, (int)(env->win_width / RES));
 }
