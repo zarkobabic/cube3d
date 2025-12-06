@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 10:25:07 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/06 04:39:02 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 05:01:52 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	map_resize_screen(t_env *env)
 	player->move_speed = player->move_speed * env->map.tile_size / TILE_SIZE;
 }
 
+// TODO: just for testing delete after
 void	test_map_print(t_env *env)
 {
 	int	i;
