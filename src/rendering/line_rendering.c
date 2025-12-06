@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 17:08:15 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/26 22:25:07 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:37:22 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ static void	draw_line_higher_slope(const t_env *env, const t_point *starting,
 /// @param fir first dot coordinate
 /// @param sec second dot coordinate
 /// @param cnt counter for x and y
-void	draw_line(const t_env *env, const t_point *starting, const t_point *ending, int color)
+void	draw_line(const t_env *env, const t_point *starting,
+	const t_point *ending, int color)
 {
 	int	dx;
 	int	dy;

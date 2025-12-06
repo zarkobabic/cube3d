@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 21:16:44 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/21 02:48:32 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:57:23 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ void	file_parse_one_element(char *line, t_env *env)
 	else if (file_check_valid_color_element(line, MAP_FLOOR_COLOR,
 			env->map.floor_color, env))
 		return (parse_rgb(line + 2, &env->map.floor_color,
-			&env->map.floor_color_set, env));
+				&env->map.floor_color_set, env));
 	else if (file_check_valid_color_element(line, MAP_CEILING_COLOR,
 			env->map.ceiling_color, env))
 		return (parse_rgb(line + 2, &env->map.ceiling_color,
-			&env->map.ceiling_color_set, env));
+				&env->map.ceiling_color_set, env));
 	free(line);
 	error_exit(env, ERROR_MSG_UNEXPECTED_FILE_LINE,
 		ERROR_CODE_FILE_SYSTEM_ERROR);

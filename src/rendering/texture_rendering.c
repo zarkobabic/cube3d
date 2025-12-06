@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 23:27:26 by eberkau           #+#    #+#             */
-/*   Updated: 2025/12/03 19:45:46 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:39:41 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ uint32_t	get_pixel_from_texture(const mlx_texture_t *tex, unsigned int x,
 	unsigned int	pix_pos;
 
 	if (!tex || !tex->pixels || x >= tex->width || y >= tex->height
-			|| tex->bytes_per_pixel < 3 || tex->bytes_per_pixel > 4)
+		|| tex->bytes_per_pixel < 3 || tex->bytes_per_pixel > 4)
 		return (0xFF00FF00);
 	pix_pos = (y * tex->width + x) * tex->bytes_per_pixel;
 	pixel_value = 0;

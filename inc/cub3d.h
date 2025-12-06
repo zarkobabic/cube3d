@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/03 17:05:55 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/06 04:00:02 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:51:46 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_tex_draw
 	int				wall_dir;
 	mlx_texture_t	*texture;
 	double			proj_height;
-	int 			tile_size;
+	int				tile_size;
 }					t_tex_draw;
 
 typedef struct s_ray_tex_data
@@ -100,7 +100,7 @@ typedef struct s_ray_tex_data
 
 typedef struct s_ray_hit
 {
-	t_point_double	intersections[2];
+	t_point_double	at[2];
 	bool			found[2];
 }					t_ray_hit;
 
@@ -198,7 +198,6 @@ void	player_init(t_player *player);
 void	player_set_starting_orientation(t_player *player,
 			char starting_orientation);
 
-
 //----PARSING----
 
 // FILE_PARSING
@@ -234,7 +233,6 @@ bool	map_validate_player(t_map *map);
 
 void	load_textures(t_env *env);
 
-
 //---------------
 
 // SCENE_RENDERING
@@ -247,9 +245,9 @@ void	render_floor(const t_env *env, t_point *wall_end);
 // ELEMENTS_RENDERING
 
 void	draw_square(const t_env *env, int size, const t_point *left_corner,
-						unsigned int color);
+			unsigned int color);
 void	draw_filled_circle(const t_env *env, const t_point_double *center,
-						int radius, int color);
+			int radius, int color);
 // LINE_RENDERING
 
 void	draw_line(const t_env *env, const t_point *starting,
@@ -269,6 +267,9 @@ int		cast_ray(double ray_angle, t_point *wall_collision_point,
 			const t_env *env);
 double	get_distance_squared(const t_point_double *point,
 			const t_point_double *player_pos);
+double	normalize_angle(double angle);
+int		select_closest_wall(t_point *wall_collision_point, t_ray_hit *hit,
+			const t_env *env, double ray_angle);
 
 // MINIMAP
 

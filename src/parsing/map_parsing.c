@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 15:25:19 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/30 18:13:05 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:35:17 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,9 @@ void	map_parsing(t_env *env, char *first_line)
 				ERROR_MSG_MATRIX_ALLOCATION_FAIL, ERROR_CODE_MAP_READ_ERROR));
 	map_list_free(&head);
 	if (!map_validate_player(&env->map))
-		error_exit(env, ERROR_MSG_INVALID_PLAYER_COUNT, ERROR_CODE_MAP_READ_ERROR);
+		error_exit(env, ERROR_MSG_INVALID_PLAYER_COUNT,
+			ERROR_CODE_MAP_READ_ERROR);
 	if (!map_validate_rules(&env->map))
-		error_exit(env, ERROR_MSG_MAP_RULES_VIOLATION, ERROR_CODE_MAP_READ_ERROR);
+		error_exit(env, ERROR_MSG_MAP_RULES_VIOLATION,
+			ERROR_CODE_MAP_READ_ERROR);
 }

@@ -6,7 +6,7 @@
 #    By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/12/03 19:50:02 by eberkau          ###   ########.fr        #
+#    Updated: 2025/12/06 04:50:17 by eberkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC_FILES = parsing/file_elements_parsing.c \
 			mlx_operations.c \
 			player.c \
 			raycasting.c \
+			raycasting_utils.c \
 			utilities.c \
 
 OBJ_FILES = $(addprefix $(OBJ_FOLDER)/, $(SRC_FILES:.c=.o))

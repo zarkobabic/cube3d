@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 00:21:31 by zbabic            #+#    #+#             */
-/*   Updated: 2025/11/24 21:40:57 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:32:03 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void	key_handler(mlx_key_data_t keydata, void *param)
 	t_env	*env;
 
 	env = (t_env *)param;
-	if (keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_S || keydata.key == MLX_KEY_LEFT_SHIFT)
+	if (keydata.key == MLX_KEY_W || keydata.key == MLX_KEY_S
+		|| keydata.key == MLX_KEY_LEFT_SHIFT)
 		forward_backward_handler(&keydata, env);
 	else if (keydata.key == MLX_KEY_A || keydata.key == MLX_KEY_D)
 		sideways_handler(&keydata, env);

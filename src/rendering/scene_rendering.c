@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 00:03:10 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/03 00:50:32 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:39:25 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	reset_background(const t_env *env)
 			mlx_put_pixel(env->img, x, y, COLOR_BACKGROUND);
 	}
 }
-
 
 void	render_floor(const t_env *env, t_point *wall_end)
 {

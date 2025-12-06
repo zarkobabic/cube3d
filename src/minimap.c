@@ -6,7 +6,7 @@
 /*   By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:48:42 by zbabic            #+#    #+#             */
-/*   Updated: 2025/12/06 04:05:16 by eberkau          ###   ########.fr       */
+/*   Updated: 2025/12/06 04:57:05 by eberkau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ bool	has_wall_at(const t_env *env, const t_point *point_in_pixel)
 void	init_minimap(t_env *env)
 {
 	env->map.minimap_tile_size = (int)fmin(
-		env->win_height * MINIMAP_RATIO / env->map.rows,
-		env->win_width * MINIMAP_RATIO / env->map.cols);
+			env->win_height * MINIMAP_RATIO / env->map.rows,
+			env->win_width * MINIMAP_RATIO / env->map.cols);
 	env->map.minimap_position_x = env->win_width - (env->map.cols
 			* env->map.minimap_tile_size) - MINIMAP_MARGIN;
 	env->map.minimap_position_y = MINIMAP_MARGIN;
