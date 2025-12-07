@@ -6,7 +6,7 @@
 #    By: eberkau <eberkau@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/03 16:25:19 by zbabic            #+#    #+#              #
-#    Updated: 2025/12/06 04:50:17 by eberkau          ###   ########.fr        #
+#    Updated: 2025/12/07 01:08:12 by eberkau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,10 +57,13 @@ SRC_FILES = parsing/file_elements_parsing.c \
 			utilities.c \
 
 OBJ_FILES = $(addprefix $(OBJ_FOLDER)/, $(SRC_FILES:.c=.o))
+HDR_FILES =	inc/cub3d.h \
+			inc/error.h \
+			inc/map_linked_list.h
 
 all: $(NAME)
 
-$(NAME): $(LIBMLX_FILE) $(LIBFT_FILE) $(OBJ_FILES)
+$(NAME): $(LIBMLX_FILE) $(LIBFT_FILE) $(OBJ_FILES) $(HDR_FILES)
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBMLX_FILE) $(LIBFT_FILE) $(LFLAGS) -o $@
 
 $(LIBMLX_FOLDER):
@@ -73,7 +76,7 @@ $(LIBMLX_FILE): $(LIBMLX_FOLDER)
 $(LIBFT_FILE):
 	$(MAKE) -C $(LIBFT_FOLDER)
 
-$(OBJ_FOLDER)/%.o: $(SRC_FOLDER)/%.c | $(OBJ_FOLDER)
+$(OBJ_FOLDER)/%.o: $(SRC_FOLDER)/%.c $(HDR_FILES) | $(OBJ_FOLDER)
 	$(CC) $(CFLAGS) $(COMPILER_DEBUG_ENABLED) $(INCLUDES) -c $< -o $@
 
 $(OBJ_FOLDER):
