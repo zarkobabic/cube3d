@@ -15,7 +15,7 @@
 
 # include "cub3d.h"
 
-# define ERROR_MSG_WRONG_NUMBER_OF_PARAMETERS  \
+# define ERROR_MSG_WRONG_NUMBER_OF_PARAMETERS \
 "Error\n Invalid number of parameters. Expected exactly 2 parameters."
 # define ERROR_MSG_WRONG_MAP_FILE_EXTENSION \
 "Error\n Invalid file extension. Expected a .cub map file."

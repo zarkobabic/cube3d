@@ -93,6 +93,7 @@ void	render_all_rays(const t_env *env, int num_rays)
 	i = 0;
 	increment = env->map.player.fov_rad / (num_rays - 1);
 	initial_angle = env->map.player.rot_angle - env->map.player.fov_rad * 0.5;
+	ft_bzero(&params, sizeof(t_ray_render_params));
 	while (i < num_rays)
 	{
 		params.ray_angle = initial_angle;

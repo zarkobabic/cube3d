@@ -1,0 +1,198 @@
+# Dynamic Linker (ld.so) - strncmp optimizations
+{
+   glibc_dl_strncmp
+   Memcheck:Addr8
+   fun:strncmp
+   fun:is_dst
+   fun:_dl_dst_substitute
+}
+
+{
+   glibc_dl_cond
+   Memcheck:Cond
+   fun:_dl_*
+}
+
+{
+   glibc_dl_value8
+   Memcheck:Value8
+   fun:_dl_*
+}
+
+# LLVM Library
+{
+   llvm_still_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libLLVM-*.so*
+}
+
+{
+   llvm_possible
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   obj:*/libLLVM-*.so*
+}
+
+# X11 Library
+{
+   x11_still_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libX11.so*
+}
+
+{
+   x11_locale
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_XlcCreateLC
+}
+
+{
+   x11_rm_init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_XrmInitParseInfo
+}
+
+{
+   x11_open_lc
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_XOpenLC
+}
+
+# GLFW Library
+{
+   glfw_init
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:glfwInit
+}
+
+{
+   glfw_still_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libglfw.so*
+}
+
+# libstdc++ (C++ Standard Library)
+{
+   libstdcpp_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libstdc++.so*
+}
+
+# Dynamic Linker - dlopen
+{
+   dl_open_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_open
+}
+
+{
+   dl_catch_exception
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_catch_exception
+}
+
+{
+   dl_new_object
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_new_object
+}
+
+{
+   dl_map_object
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_map_object
+}
+
+{
+   dl_load_cache
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:_dl_load_cache_lookup
+}
+
+{
+   dlopen_implementation
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:dlopen_implementation
+   fun:dlopen@@GLIBC_*
+}
+
+# XCB (X C Bindings)
+{
+   xcb_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libxcb*.so*
+}
+
+# Mesa / OpenGL drivers
+{
+   mesa_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libGL*.so*
+}
+
+{
+   dri_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/dri/*.so
+}
+
+# General system allocations
+{
+   libc_dlclose
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:dlclose*
+}
+
+{
+   pthread_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/libpthread*.so*
+}
+
+{
+   zero_sized_blocks
+   Memcheck:Leak
+   match-leak-kinds: definite
+   ...
+   fun:malloc
+   fun:*
+}

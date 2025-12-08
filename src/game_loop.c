@@ -12,15 +12,14 @@
 
 #include "cub3d.h"
 
-static void	rotate_camera_if_necessary(t_player *player, bool *scene_changed,
-		const t_env *env)
+static void	rotate_camera_if_necessary(t_player *player, bool *scene_changed)
 {
 	int	rot_dir;
 
 	rot_dir = player->keys.right_arrow - player->keys.left_arrow;
 	if (rot_dir != 0)
 	{
-		player->rot_angle += rot_dir * player->rot_speed * env->win->delta_time;
+		player->rot_angle += rot_dir * player->rot_speed;
 		if (player->rot_angle < 0)
 			player->rot_angle += 2 * M_PI;
 		else if (player->rot_angle >= 2 * M_PI)
@@ -34,15 +33,23 @@ static void	handle_collisions(const t_env *env, double *dx, double *dy)
 	t_player	*player;
 	char		**map;
 	int			tile_size;
+	int			temp_x;
+	int			temp_y;
 
 	player = (t_player *)&env->map.player;
 	map = env->map.matrix;
 	tile_size = env->map.tile_size;
-	if (map[(int)(player->pos.y / tile_size)]
-			[(int)((player->pos.x + *dx) / tile_size)] == MAP_WALL)
+	temp_y = (int)(player->pos.y / tile_size);
+	temp_x = (int)((player->pos.x + *dx) / tile_size);
+	if (temp_y < 0 || temp_y >= env->map.rows
+		|| temp_x < 0 || temp_x >= env->map.cols
+		|| map[temp_y][temp_x] == MAP_WALL || map[temp_y][temp_x] == MAP_SPACE)
 		*dx = 0;
-	if (map[(int)((player->pos.y + *dy) / tile_size)]
-			[(int)(player->pos.x / tile_size)] == MAP_WALL)
+	temp_y = (int)((player->pos.y + *dy) / tile_size);
+	temp_x = (int)(player->pos.x / tile_size);
+	if (temp_y < 0 || temp_y >= env->map.rows
+		|| temp_x < 0 || temp_x >= env->map.cols
+		|| map[temp_y][temp_x] == MAP_WALL || map[temp_y][temp_x] == MAP_SPACE)
 		*dy = 0;
 }
 
@@ -74,10 +81,8 @@ static void	move_player_if_necessary(t_player *player, bool *scene_changed,
 	length = sqrt(dx * dx + dy * dy);
 	if (length > 0)
 	{
-		dx = (dx / length) * player->move_speed * env->map.tile_size
-			* env->win->delta_time;
-		dy = (dy / length) * player->move_speed * env->map.tile_size
-			* env->win->delta_time;
+		dx = (dx / length) * player->move_speed * env->map.tile_size;
+		dy = (dy / length) * player->move_speed * env->map.tile_size;
 	}
 	handle_sprint(forward, player->keys.lshift, &dx, &dy);
 	handle_collisions(env, &dx, &dy);
@@ -93,7 +98,7 @@ void	game_loop(void *param)
 
 	player = &((t_env *)param)->map.player;
 	scene_changed = false;
-	rotate_camera_if_necessary(player, &scene_changed, (t_env *)param);
+	rotate_camera_if_necessary(player, &scene_changed);
 	move_player_if_necessary(player, &scene_changed, (t_env *)param);
 	if (scene_changed)
 		render_scene((t_env *)param);

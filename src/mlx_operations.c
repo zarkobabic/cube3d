@@ -41,6 +41,8 @@ void	mlx_initialization(t_env *env)
 
 void	mlx_destroy(t_env *env)
 {
+	if (env->img)
+		mlx_delete_image(env->win, env->img);
 	mlx_terminate(env->win);
 	env->win = NULL;
 }
